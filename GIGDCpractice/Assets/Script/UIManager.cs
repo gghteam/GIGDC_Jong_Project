@@ -5,24 +5,39 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    public GameObject _MainUI = null;
-    public GameObject background = null;
-    public GameObject[] mainUI = null;
-    public GameObject[] lordUI = null;
-    public GameObject[] settingUI = null;
-    public GameObject[] quitUI = null;
+    [SerializeField]
+    private GameObject background = null;
+    [SerializeField]
+    private GameObject[] mainUI = null;
+    [SerializeField]
+    private GameObject[] lordUI = null;
+    [SerializeField]
+    private GameObject[] settingUI = null;
+    [SerializeField]
+    private GameObject[] quitUI = null;
+    [SerializeField]
+    private GameObject[] escUI = null;
+    [SerializeField]
+    private GameObject[] realMainUI = null;
+    [SerializeField]
+    private GameObject[] realQuitUI = null;
 
-    public enum UIList { MAIN, LORD, SETTING, QUIT, PLAY};
+    private enum UIList { MAIN, LORD, SETTING, QUIT, PLAY, ESC, RM, RQ};
 
-    public UIList nowViewUI = UIList.MAIN;
+    [SerializeField]
+    private UIList nowViewUI = UIList.MAIN;
+
+    [SerializeField]
+    private bool play = false;
 
     void Start()
     {
+        play = false;
+
         Time.timeScale = 0f;
 
         nowViewUI = UIList.MAIN;
 
-        _MainUI.SetActive(true);
         background.SetActive(true);
         for (int i = 0; i < 5; i++)
         {
@@ -40,6 +55,10 @@ public class UIManager : MonoBehaviour
         {
             quitUI[i].SetActive(false);
         }
+        for (int i = 0; i < 6; i++)
+        {
+            escUI[i].SetActive(false);
+        }
     }
 
     void Update()
@@ -54,21 +73,42 @@ public class UIManager : MonoBehaviour
                     }
                 case UIList.LORD:
                     {
-                        Lord_Back();
+                        if (play == true) Lord_Back_ESC();
+                        else Lord_Back_Main();
+
                         break;
                     }
                 case UIList.SETTING:
                     {
-                        Setting_Back();
+                        if (play == true) Setting_Back_ESC();
+                        else Setting_Back_Main();
+
                         break;
                     }
                 case UIList.QUIT:
                     {
+                        Quit_No();
                         break;
                     }
                 case UIList.PLAY:
                     {
                         //TODO 스텟, 미니맵, 등등 띄우기
+                        ESC();
+                        break;
+                    }
+                case UIList.ESC:
+                    {
+                        ESC_Back();
+                        break;
+                    }
+                case UIList.RM:
+                    {
+                        RealMain_No();
+                        break;
+                    }
+                case UIList.RQ:
+                    {
+                        RealQuit_No();
                         break;
                     }
             }
@@ -97,10 +137,12 @@ public class UIManager : MonoBehaviour
             quitUI[i].SetActive(false);
         }
 
+        play = true;
+
         Time.timeScale = 1f;
     }
 
-    public void Main_Lord()
+    public void Lord()
     {
         nowViewUI = UIList.LORD;
 
@@ -110,21 +152,36 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void Main_Setting()
+    public void Setting()
     {
         nowViewUI = UIList.SETTING;
 
-        for (int i = 0; i < 5; i++)
+        if (play == true)
         {
-            mainUI[i].SetActive(false);
+            for (int i = 0; i < 6; i++)
+            {
+                escUI[i].SetActive(false);
+            }
+            background.SetActive(true);
+            for (int i = 0; i < 3; i++)
+            {
+                settingUI[i].SetActive(true);
+            }
         }
-        for (int i = 0; i < 6; i++)
+        else
         {
-            lordUI[i].SetActive(false);
-        }
-        for (int i = 0; i < 3; i++)
-        {
-            settingUI[i].SetActive(true);
+            for (int i = 0; i < 5; i++)
+            {
+                mainUI[i].SetActive(false);
+            }
+            for (int i = 0; i < 6; i++)
+            {
+                lordUI[i].SetActive(false);
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                settingUI[i].SetActive(true);
+            }
         }
     }
 
@@ -164,6 +221,8 @@ public class UIManager : MonoBehaviour
             quitUI[i].SetActive(false);
         }
 
+        play = true;
+
         Time.timeScale = 1f;
     }
 
@@ -192,6 +251,8 @@ public class UIManager : MonoBehaviour
         {
             quitUI[i].SetActive(false);
         }
+
+        play = true;
 
         Time.timeScale = 1f;
     }
@@ -222,10 +283,24 @@ public class UIManager : MonoBehaviour
             quitUI[i].SetActive(false);
         }
 
+        play = true;
+
         Time.timeScale = 1f;
     }
 
     public void Lord_Back()
+    {
+        if (play == true) Lord_Back_ESC();
+        else Lord_Back_Main();
+    }
+
+    public void Setting_Back()
+    {
+        if (play == true) Setting_Back_ESC();
+        else Setting_Back_Main();
+    }
+
+    public void Lord_Back_Main()
     {
         nowViewUI = UIList.MAIN;
 
@@ -235,7 +310,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void Setting_Back()
+    public void Setting_Back_Main()
     {
         nowViewUI = UIList.MAIN;
 
@@ -266,6 +341,112 @@ public class UIManager : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             mainUI[i].SetActive(true);
+        }
+    }
+
+    public void ESC()
+    {
+        nowViewUI = UIList.ESC;
+
+        for (int i = 0; i < 6; i++)
+        {
+            escUI[i].SetActive(true);
+        }
+    }
+
+    public void ESC_Back()
+    {
+        nowViewUI = UIList.PLAY;
+
+        for (int i = 0; i < 6; i++)
+        {
+            escUI[i].SetActive(false);
+        }
+    }
+
+    public void Lord_Back_ESC()
+    {
+        nowViewUI = UIList.ESC;
+
+        for (int i = 0; i < 6; i++)
+        {
+            lordUI[i].SetActive(false);
+        }
+    }
+
+    public void Setting_Back_ESC()
+    {
+        nowViewUI = UIList.ESC;
+
+        for (int i = 0; i < 3; i++)
+        {
+            settingUI[i].SetActive(false);
+        }
+        background.SetActive(false);
+        for (int i = 0; i < 6; i++)
+        {
+            escUI[i].SetActive(true);
+        }
+    }
+
+    public void RealMain()
+    {
+        nowViewUI = UIList.RM;
+
+        for (int i = 0; i < 4; i++)
+        {
+            realMainUI[i].SetActive(true);
+        }
+    }
+
+    public void RealMain_Yes()
+    {
+        nowViewUI = UIList.MAIN;
+
+        play = false;
+
+        for (int i = 0; i < 4; i++)
+        {
+            realMainUI[i].SetActive(false);
+        }
+        for (int i = 0; i < 6; i++)
+        {
+            escUI[i].SetActive(false);
+        }
+        background.SetActive(true);
+        for (int i = 0; i < 5; i++)
+        {
+            mainUI[i].SetActive(true);
+        }
+    }
+
+    public void RealMain_No()
+    {
+        nowViewUI = UIList.ESC;
+
+        for (int i = 0; i < 4; i++)
+        {
+            realMainUI[i].SetActive(false);
+        }
+    }
+
+    public void RealQuit()
+    {
+        nowViewUI = UIList.RQ;
+
+        for (int i = 0; i < 4; i++)
+        {
+            realQuitUI[i].SetActive(true);
+        }
+    }
+
+    public void RealQuit_No()
+    {
+        nowViewUI = UIList.RQ;
+
+        for (int i = 0; i < 4; i++)
+        {
+            realQuitUI[i].SetActive(false);
         }
     }
 }
