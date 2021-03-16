@@ -54,7 +54,7 @@ public class PlayerScript : MonoBehaviour
         {
             f += Time.deltaTime;
             rigidbody.velocity = new Vector2(rigidbody.velocity.x, 40);
-            Debug.Log(f);
+            //Debug.Log(f);
             if (f >= 0.3f)
             {
                 isJumping = true; isDown = true;
@@ -63,7 +63,7 @@ public class PlayerScript : MonoBehaviour
             anime.SetBool("IsJumping", true);
         }
 
-        if (Input.GetKeyUp(KeyCode.X)) { isDown = false; f = 0; }
+        if (Input.GetKeyUp(KeyCode.X)) { isJumping = true; isDown = false; f = 0; }
 
 
         if (rigidbody.velocity.x > MaxSpeed)
