@@ -53,10 +53,11 @@ public class PlayerScript : MonoBehaviour
                 anime.SetBool("IsWalking", true);
         }
 
+       
         if (Input.GetKey(KeyCode.X) && !isJumping && !isDown)
         {
             f += Time.deltaTime;
-            rigidbody.velocity = new Vector2(rigidbody.velocity.x, 50);
+            rigidbody.velocity = new Vector2(rigidbody.velocity.x, JumpPower);
             //Debug.Log(f);
             if (f >= 0.3f)
             {
@@ -64,6 +65,10 @@ public class PlayerScript : MonoBehaviour
                 f = 0;
             }
             anime.SetBool("IsJumping", true);
+        }
+        else
+        {
+            rigidbody.velocity = new Vector2(rigidbody.velocity.x, -JumpPower);
         }
 
         if (Input.GetKeyUp(KeyCode.X)) { isJumping = true; isDown = false; f = 0; }
@@ -97,14 +102,19 @@ public class PlayerScript : MonoBehaviour
         RaycastHit2D rayHit = Physics2D.Raycast(transform.position, Vector2.down, 2, LayerMask.GetMask("Platform"));
         if(rigidbody.velocity.y < 0.3f)
         {
-            if(rayHit.collider != null)
+            if (rayHit.collider != null)
             {
-                if(rayHit.distance > 0.2f)
+                if (rayHit.distance > 0.2f)
                 {
                     anime.SetBool("IsJumping", false); isJumping = false;
                 }
                 Debug.Log(rayHit.collider.name);
             }
+            else
+            {
+                anime.SetBool("IsJumping", true);
+            }
+           
         }
     }
 }
