@@ -7,31 +7,37 @@ public class PlayerScript : MonoBehaviour
     private Animator anime;
     private SpriteRenderer SR;
 
-    public float Speed;
+    public float RunSpeed;
     public float JumpPower;
     public float MaxSpeed;
+    public float Gravity;
 
-    private float x; private float Onesec = 0; private float temp = 0;
-    private float f = 0; private bool isJumping = false; private bool isDown = false;
+    private float x; private float Onesec = 0; private float temp1 = 0; private float temp2 = 0; private float temp3 = 0;
+    private float f = 0; private bool isJumping = false; private bool isDown = false; private bool isFall = false;
     private Rigidbody2D rigidbody;
     private void Start()
     {
         SR = gameObject.GetComponent<SpriteRenderer>();
         anime = gameObject.GetComponent<Animator>();
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
-        temp = MaxSpeed;
+        temp1 = MaxSpeed;
+        temp2 = JumpPower;
+        temp3 = Gravity;
     }
     private void Update()
     {
         x = Input.GetAxis("Horizontal");
-        rigidbody.velocity = (new Vector2(x * Speed, 0));
+        rigidbody.velocity = (new Vector2(x * MaxSpeed, 0));
 
         if (Input.GetButton("Horizontal"))
         {
-            Onesec += Time.deltaTime;
-            if (Onesec >= 0.5f)
+            if (!isFall)
             {
-                anime.SetBool("IsRuning", true);
+                Onesec += Time.deltaTime;
+                if (Onesec >= 0.5f)
+                {
+                    anime.SetBool("IsRuning", true);
+                }
             }
         }
         else
@@ -57,8 +63,8 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKey(KeyCode.X) && !isJumping && !isDown)
         {
             f += Time.deltaTime;
+            JumpPower -= f * (temp2/10);
             rigidbody.velocity = new Vector2(rigidbody.velocity.x, JumpPower);
-            //Debug.Log(f);
             if (f >= 0.3f)
             {
                 isJumping = true; isDown = true;
@@ -68,15 +74,24 @@ public class PlayerScript : MonoBehaviour
         }
         else
         {
-            rigidbody.velocity = new Vector2(rigidbody.velocity.x, -JumpPower);
+            rigidbody.velocity = new Vector2(rigidbody.velocity.x, -Gravity); JumpPower = temp2;
         }
 
-        if (Input.GetKeyUp(KeyCode.X)) { isJumping = true; isDown = false; f = 0; }
+        if(isJumping && Input.GetKey(KeyCode.X))
+        {
+            rigidbody.velocity = new Vector2(rigidbody.velocity.x, -5); isFall = true; MaxSpeed = temp1; Debug.Log("적용 중");
+        }
+        else
+        {
+            Gravity = temp3; isFall = false;
+        }
+
+        if (Input.GetKeyUp(KeyCode.X)) { isJumping = true; isDown = false; f = 0; JumpPower = temp2; }
 
         if (anime.GetBool("IsRuning"))
-            MaxSpeed = temp + 10;
+            MaxSpeed = RunSpeed;
         else
-            MaxSpeed = temp;
+            MaxSpeed = temp1;
 
         if (rigidbody.velocity.x > MaxSpeed)
         {
@@ -112,7 +127,7 @@ public class PlayerScript : MonoBehaviour
             }
             else
             {
-                anime.SetBool("IsJumping", true);
+                anime.SetBool("IsJumping", true); isJumping = true;
             }
            
         }
