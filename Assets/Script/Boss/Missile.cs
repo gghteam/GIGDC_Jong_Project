@@ -8,7 +8,7 @@ public class Missile : MonoBehaviour
     [SerializeField]
     GameObject missilePrepab;
     [SerializeField]
-    float speed = 2f, rotSpeed = 2f;
+    float speed = 2f, rotSpeed = 2f, missileDeleteTime = 0f;
 
     Quaternion rotTarget;
     Vector3 dir;
@@ -24,6 +24,7 @@ public class Missile : MonoBehaviour
     void Update()
     {
         GuidMissile();
+        Invoke("DeleteMissile", missileDeleteTime);
     }
     void GuidMissile()
     {
@@ -32,5 +33,17 @@ public class Missile : MonoBehaviour
         rotTarget = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotTarget, Time.deltaTime * rotSpeed);
         transform.Translate(Vector2.right*speed*Time.deltaTime);
+    }
+    void DeleteMissile()
+    {
+        this.gameObject.SetActive(false);
+
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            DeleteMissile();
+        }
     }
 }
