@@ -86,7 +86,7 @@ public class BossBoy : MonoBehaviour
     }
     void ShootBullet()
     {
-        for (int i = 0; i < 360; i += 13)
+        for (int i = 0; i < 360; i += 36)
         {
             Missile = MissileSpawn.instance.GetMissile(this.transform.position);
             //Z에 값이 변해야 회전이 이루어지므로, Z에 i를 대입한다.
