@@ -97,8 +97,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   missilePrepab: {fileID: 3357833980361398660}
-  speed: 10
-  rotSpeed: 2
+  speed: 15
+  rotSpeed: 3
   missileDeleteTime: 3
 --- !u!50 &8721171786169732789
 Rigidbody2D:
@@ -131,7 +131,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.017239116, y: 0.00492543}

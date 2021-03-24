@@ -3062,7 +3062,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 717811257}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.99, y: 1.32, z: 4.59375}
+  m_LocalPosition: {x: 7.11, y: 0.31, z: 4.59375}
   m_LocalScale: {x: 6, y: 6, z: 0}
   m_Children: []
   m_Father: {fileID: 53379547}
@@ -3107,9 +3107,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3241123878670339941, guid: ca47c4351848f564dacd07cd4462a7b1,
+  m_Sprite: {fileID: -5979626782480874792, guid: afeea27e32f84274db2fb3a92abce2dc,
     type: 3}
-  m_Color: {r: 0.7735849, g: 0.23718406, b: 0.23718406, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3147,6 +3147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patternDelay: 2
   bossPattern: 0
+  phase2: 0
 --- !u!95 &717811262
 Animator:
   serializedVersion: 3
