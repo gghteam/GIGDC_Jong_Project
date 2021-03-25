@@ -9,6 +9,7 @@ public class PlayerScript : MonoBehaviour
 
     public float RunSpeed;
     public float JumpPower;
+    public float JumpPowerLimit;
     public float MaxSpeed;
     public float Gravity;
 
@@ -113,13 +114,13 @@ public class PlayerScript : MonoBehaviour
         }
 
         //점프, 낙하 속도 제한 두기
-        if (rigidbody.velocity.y > JumpPower*3)
+        if (rigidbody.velocity.y > JumpPowerLimit * 3)
         {
-            rigidbody.velocity = new Vector2(rigidbody.velocity.x, JumpPower * 3);
+            rigidbody.velocity = new Vector2(rigidbody.velocity.x, JumpPowerLimit * 3);
         }
-        else if (rigidbody.velocity.y < -JumpPower * 3)
+        else if (rigidbody.velocity.y < -JumpPowerLimit * 3)
         {
-            rigidbody.velocity = new Vector2(rigidbody.velocity.x, -JumpPower * 3);
+            rigidbody.velocity = new Vector2(rigidbody.velocity.x, -JumpPowerLimit * 3);
         }
 
         // 무한으로 즐기는 점프 방지하기

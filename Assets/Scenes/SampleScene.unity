@@ -866,7 +866,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SR: {fileID: 204857853}
   RunSpeed: 25
-  JumpPower: 25
+  JumpPower: 18
+  JumpPowerLimit: 20
   MaxSpeed: 15
   Gravity: 15
 --- !u!1 &219960586

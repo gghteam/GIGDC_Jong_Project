@@ -8,71 +8,101 @@ public class Drons : MonoBehaviour
     public float dronSpeed = 0f;
     public Animator anime;
 
-    private float time1 = 0;
-    private float time2 = 0;
-    private float time3 = 0;
-    
-    static bool Attack1 = false;
-    static bool Attack2 = false;
-    static bool Attack3 = false;
-    void Start()
+    private float time = 0;
+    void Attack1()
     {
-
+        
     }
 
     void Func()
     {
-        if (Input.GetKeyDown(KeyCode.Z) && !Attack1 && !Attack3)
+        if(Input.GetKeyDown(KeyCode.Z))
         {
-            Attack1 = true;
-            // 공격 1 코드;
-            anime.SetBool("Attack1", true);
-            Debug.Log("공격 1");
+            anime.SetInteger("Stack", 1);
         }
-        if (Attack1)
+        if(anime.GetInteger("Stack") == 1)
         {
-            time1 += Time.deltaTime;
+            time += Time.deltaTime;
         }
-        if (time1 < 2f && time1 > 1f && Input.GetKeyDown(KeyCode.Z) && !Attack2 && !Attack3)
+        if (time < 0.5f)
         {
-            Attack2 = true; time1 = 0;
-            //공격 2 코드
-            anime.SetBool("Attack2", true);
-            Debug.Log("공격 2");
+
         }
-        if (Attack2)
+        else
         {
-            time2 += Time.deltaTime;
-        }
-        if (time2 < 2f && time2 > 1f && Input.GetKeyDown(KeyCode.Z) && Attack2 && !Attack3)
-        {
-            Attack3 = true; time2 = 0;
-            //공격 3 코드
-            anime.SetBool("Attack3", true);
-            Debug.Log("공격 3");
-        }
-        if (Attack3)
-        {
-            time3 += Time.deltaTime;
-        }
-        if(Attack3 && time3 > 1f)
-        {
-            Attack1 = false; Attack2 = false; Attack3 = false;
-            anime.SetBool("Attack1", false); anime.SetBool("Attack2", false); anime.SetBool("Attack3", false);
-            time1 = 0; time2 = 0; time3 = 0;
+
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //if (Input.GetKeyDown(KeyCode.Z) && !Attack1 && !Attack3)
+        //{
+        //    Attack1 = true;
+        //    // 공격 1 코드;
+        //    anime.SetBool("Attack1", true);
+        //    Debug.Log("공격 1");
+        //}
+        //if (Attack1)
+        //{
+        //    time1 += Time.deltaTime;
+        //}
+        //if (time1 < 2f && time1 > 1f && Input.GetKeyDown(KeyCode.Z) && !Attack2 && !Attack3)
+        //{
+
+        //    Attack2 = true; time1 = 0;
+        //    //공격 2 코드
+        //    anime.SetBool("Attack2", true);
+        //    Debug.Log("공격 2");
+        //}
+        //if (Attack2)
+        //{
+        //    time2 += Time.deltaTime;
+        //}
+        //if (time2 < 2f && time2 > 1f && Input.GetKeyDown(KeyCode.Z) && Attack2 && !Attack3)
+        //{
+        //    Attack3 = true; time2 = 0;
+        //    //공격 3 코드
+        //    anime.SetBool("Attack3", true);
+        //    Debug.Log("공격 3");
+        //}
+        //if (Attack3)
+        //{
+        //    time3 += Time.deltaTime;
+        //}
+        //if(Attack3 && time3 > 1f)
+        //{
+        //    Attack1 = false; Attack2 = false; Attack3 = false;
+        //    anime.SetBool("Attack1", false); anime.SetBool("Attack2", false); anime.SetBool("Attack3", false);
+        //    time1 = 0; time2 = 0; time3 = 0;
+        //}
     }
 
     void Update()
     {
         Func();
-        if(Input.GetKeyDown(KeyCode.Z))
-        {
-            //공격 1타
 
-            
-        }
 
 
         //z클릭
