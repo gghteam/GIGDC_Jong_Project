@@ -713,6 +713,7 @@ GameObject:
   - component: {fileID: 204857855}
   - component: {fileID: 204857859}
   - component: {fileID: 204857857}
+  - component: {fileID: 204857858}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -852,6 +853,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &204857858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 204857852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38bb09febe5555a40b6ddb2b45d02021, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anime: {fileID: 204857857}
 --- !u!114 &204857859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3001,7 +3015,6 @@ GameObject:
   m_Component:
   - component: {fileID: 661811765}
   - component: {fileID: 661811766}
-  - component: {fileID: 661811767}
   m_Layer: 0
   m_Name: Dron2
   m_TagString: Untagged
@@ -3073,21 +3086,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &661811767
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 661811764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38bb09febe5555a40b6ddb2b45d02021, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Range: 5
-  dronSpeed: 10
-  anime: {fileID: 204857857}
 --- !u!1 &693989502
 GameObject:
   m_ObjectHideFlags: 0
@@ -5068,7 +5066,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1212766285}
   - component: {fileID: 1212766286}
-  - component: {fileID: 1212766288}
   - component: {fileID: 1212766287}
   m_Layer: 0
   m_Name: Dron1
@@ -5157,21 +5154,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1212766288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1212766284}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38bb09febe5555a40b6ddb2b45d02021, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Range: 3
-  dronSpeed: 5
-  anime: {fileID: 204857857}
 --- !u!1 &1228119681
 GameObject:
   m_ObjectHideFlags: 0
