@@ -48,6 +48,7 @@ public class Attack : MonoBehaviour
         {
             anime.SetInteger("Stack", 3);
         }
+
         if(a == 3)
             anime.SetInteger("Stack", 0); anime1 = false; anime2 = false; a = 0;
     }
