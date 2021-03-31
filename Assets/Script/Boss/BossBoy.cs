@@ -5,26 +5,33 @@ using UnityEngine;
 
 public class BossBoy : MonoBehaviour
 {
+    public int bossPattern = 0;
+    public bool phase2 = false;
+    public bool isDashAttack = false;
+    public GameObject targetObj;
+    public bool a = true;
+
     [SerializeField]
     private float patternDelay = 0f;
+    [SerializeField]
+    private GameObject DashAttackObj;
+    private BoxCollider2D DashAttackObjRig;
+    private bool isPattern = false;
+    private GameObject Missile;
     private float time = 0f;
 
-    private GameObject Missile;
 
-    public int bossPattern = 0;
-    private bool isPattern = false;
-    public bool phase2 = false;
-
-   
     // Start is called before the first frame update
     void Start()
-    {
-        
+    { 
+        DashAttackObjRig = DashAttackObj.GetComponent<BoxCollider2D>();
+        StartCoroutine("test");
     }
 
     // Update is called once per frame
     void Update()
     {
+        
         time += Time.deltaTime;
         //보스 패턴 증가
         if (patternDelay < time)
@@ -56,11 +63,13 @@ public class BossBoy : MonoBehaviour
                     }
                     break;
                 case 2:
-                    ShootBullet();
+                    ShootBullet360();
                     Debug.Log("공격2");
                     isPattern = false;
                     break;
                 case 3:
+                    //DashAttackObj.SetActive(true);
+                    //Invoke("DashAttack", 0.5f);
                     Debug.Log("공격3");
                     isPattern = false;
                     break;
@@ -84,7 +93,7 @@ public class BossBoy : MonoBehaviour
         Missile = MissileSpawn.instance.GetMissile(this.transform.position);
 
     }
-    void ShootBullet()
+    void ShootBullet360()
     {
         for (int i = 0; i < 360; i += 36)
         {
@@ -92,5 +101,10 @@ public class BossBoy : MonoBehaviour
             //Z에 값이 변해야 회전이 이루어지므로, Z에 i를 대입한다.
             Missile.transform.rotation = Quaternion.Euler(0, 0, i);
         }
+    }
+    void DashAttack()
+    {
+        DashAttackObjRig.enabled = true;
+
     }
 }
