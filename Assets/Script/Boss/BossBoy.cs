@@ -5,22 +5,25 @@ using UnityEngine;
 
 public class BossBoy : MonoBehaviour
 {
-    public int bossPattern = 0;
-    public bool phase2 = false;
-    public bool isDashAttack = false;
     public GameObject targetObj;
-    public bool a = true;
+    public GameObject laserObj;
+
+    public bool phase2 = false;
+    public int bossPattern = 0;
 
     [SerializeField]
     private float patternDelay = 0f;
+    private bool isPattern = false;
+
+    private GameObject Missile;
+
+    private float time = 0f;
+  
+    //대쉬 공격
     [SerializeField]
     private GameObject dashAttackObj;
-    private BoxCollider2D dashAttackObjRig;
-    private bool isPattern = false;
-    private GameObject Missile;
-    private float time = 0f;
     private SpriteRenderer dashRenderer;
-
+    private BoxCollider2D dashAttackObjRig;
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +35,6 @@ public class BossBoy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         time += Time.deltaTime;
         //보스 패턴 증가
         if (patternDelay < time)
@@ -66,7 +68,6 @@ public class BossBoy : MonoBehaviour
                         StartCoroutine(DashAttack_2());
                         isPattern = false;
                     }
-                    //패턴 1 미사일 발사
                     else
                     {
                         StartCoroutine(DashAttack());
@@ -75,12 +76,11 @@ public class BossBoy : MonoBehaviour
                     break;
                 case 3:
                     
-                    Invoke("DashAttack", 0.5f);
-                    
                     Debug.Log("공격3");
                     isPattern = false;
                     break;
                 case 4:
+                    StartCoroutine(Laser());
                     Debug.Log("공격4");
                     isPattern = false;
                     break;
@@ -131,5 +131,15 @@ public class BossBoy : MonoBehaviour
         yield return new WaitForSeconds(1f);
         StartCoroutine(DashAttack());
         yield return new WaitForSeconds(1f);
+    }
+    IEnumerator Laser()
+    {
+        laserObj.transform.rotation = new Quaternion(0,0,-70,0);
+        yield return new WaitForSeconds(1f);
+        for (int i = 0; i < 70; i++)
+        {
+            yield return new WaitForSeconds(0.01f);
+            laserObj.transform.Rotate(0, 0, 2);
+        }
     }
 }

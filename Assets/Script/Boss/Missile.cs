@@ -32,6 +32,8 @@ public class Missile : MonoBehaviour
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         rotTarget = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotTarget, Time.deltaTime * rotSpeed);
+
+
         transform.Translate(Vector2.right*speed*Time.deltaTime);
     }
     void DeleteMissile()
