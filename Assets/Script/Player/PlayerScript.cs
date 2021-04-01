@@ -134,7 +134,7 @@ public class PlayerScript : MonoBehaviour
                 {
                     anime.SetBool("IsJumping", false); isJumping = false;
                 }
-                Debug.Log(rayHit.collider.name);
+                //Debug.Log(rayHit.collider.name);
             }
             else
             {
