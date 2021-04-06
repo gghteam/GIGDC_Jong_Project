@@ -6,54 +6,68 @@ public class Attack : MonoBehaviour
 {
     public Animator anime;
     public int a= 0;
+    private float time;
+    private bool Attacking = false;
     private bool anime1 = false; private bool anime2 = false;
+
+    public void Attack1()
+    {
+        if (Attacking)
+            anime.SetInteger("Stack", 2);
+        else
+            anime.SetBool("EndAttack", true);
+        Attacking = false;
+    }
     public void Attack2()
     {
-        if(anime2)
-        {
+        if (Attacking)
             anime.SetInteger("Stack", 3);
-        }
+        else 
+            anime.SetBool("EndAttack", true);
+        Attacking = false;
     }
     public void Attack3()
     {
-        
+        anime.SetBool("EndAttack", true);
+        Attacking = false;
     }
     void Func()
     {
-        if(Input.GetKeyDown(KeyCode.Z) && anime.GetInteger("Stack") == 0)
+        if(anime.GetBool("EndAttack"))
         {
-            anime.SetInteger("Stack", 1);
+            StartCoroutine(Change());
+            anime.SetInteger("Stack", 0);
         }
-        if(anime.GetInteger("Stack") == 1)
+        if (Input.GetKeyDown(KeyCode.Z) && anime.GetInteger("Stack") != 0)
         {
-            if(Input.GetKeyDown(KeyCode.Z))
+            Attacking = true;
+        }
+        if (anime.GetBool("IsRuning"))
+        {
+            if (Input.GetKeyDown(KeyCode.Z) && anime.GetInteger("Stack") == 0)
             {
-                anime1 = true;
+                anime.Play("gRunAttack1");
+                anime.SetInteger("Stack", 1);
             }
         }
-        if(anime.GetInteger("Stack") == 2)
+        else
         {
-            if(Input.GetKeyDown(KeyCode.Z))
+            if (Input.GetKeyDown(KeyCode.Z) && anime.GetInteger("Stack") == 0)
             {
-                anime2 = true;
+                anime.Play("gIdleAttack1");
+                anime.SetInteger("Stack", 1);
             }
         }
 
-        if (anime1 && a == 1)
-        {
-            anime.SetInteger("Stack", 2);
-        }
-
-        if (anime2 && a == 2)
-        {
-            anime.SetInteger("Stack", 3);
-        }
-
-        if(a == 3)
-            anime.SetInteger("Stack", 0); anime1 = false; anime2 = false; a = 0;
     }
     void Update()
     {
         Func();
+    }
+
+    private IEnumerator Change()
+    {
+        yield return new WaitForSeconds(0.01f);
+        anime.SetBool("EndAttack", false);
     }
 }
