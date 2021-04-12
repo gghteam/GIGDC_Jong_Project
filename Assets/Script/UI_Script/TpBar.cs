@@ -10,6 +10,7 @@ public class TpBar : MonoBehaviour
     [SerializeField]
     private Image tpBar = null;
 
+    [SerializeField]
     private float curTP;
     private float maxTP = 100;
 
@@ -21,8 +22,13 @@ public class TpBar : MonoBehaviour
     public void UpdateTPBar(float tp)
     {
         curTP += tp;
-
-        if (curTP < maxTP)
+        
+        if (curTP <= 0)
+        {
+            curTP = 0;
+            Debug.Log("TP가 없씀!");
+        }
+        else if (!(curTP >= maxTP))
         {
             tpText.text = string.Concat("TP:" + Mathf.Round(curTP));
             tpBar.fillAmount = curTP / 100;
