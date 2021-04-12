@@ -9,6 +9,7 @@ public class BossBoy : MonoBehaviour
     public GameObject laserObj;
 
     public bool phase2 = false;
+    public bool startBoss = false;
     public int bossPattern = 0;
 
     [SerializeField]
@@ -35,6 +36,7 @@ public class BossBoy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(startBoss)
         time += Time.deltaTime;
         //보스 패턴 증가
         if (patternDelay < time)
@@ -134,12 +136,21 @@ public class BossBoy : MonoBehaviour
     }
     IEnumerator Laser()
     {
-        laserObj.transform.rotation = new Quaternion(0,0,-70,0);
+        laserObj.SetActive(true);
         yield return new WaitForSeconds(1f);
-        for (int i = 0; i < 70; i++)
+        for (int i = 0; i < 140; i++)
         {
             yield return new WaitForSeconds(0.01f);
-            laserObj.transform.Rotate(0, 0, 2);
+            laserObj.transform.Rotate(0, 0, 1);
+        }
+        laserObj.SetActive(false);
+        laserObj.transform.Rotate(0, 0, -140);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag.Equals("Player"))
+        {
+            startBoss = true;
         }
     }
 }
