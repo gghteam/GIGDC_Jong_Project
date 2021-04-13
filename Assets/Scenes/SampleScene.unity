@@ -1215,6 +1215,8 @@ GameObject:
   - component: {fileID: 219960589}
   - component: {fileID: 219960588}
   - component: {fileID: 219960587}
+  - component: {fileID: 219960591}
+  - component: {fileID: 219960590}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Untagged
@@ -1306,6 +1308,34 @@ Transform:
   m_Father: {fileID: 53379547}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &219960590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 219960586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8ff2fe63f9658747a5268e5b8ef4808, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &219960591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 219960586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96655b52640ee5c4db22dbcd877b80f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 20
+  exp: 2
+  atk: 17
+  def: 0
 --- !u!1 &230146402
 GameObject:
   m_ObjectHideFlags: 0
@@ -5466,6 +5496,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tpText: {fileID: 1047306423}
   tpBar: {fileID: 1063742039}
+  curTP: 0
 --- !u!1 &1092689216
 GameObject:
   m_ObjectHideFlags: 0
