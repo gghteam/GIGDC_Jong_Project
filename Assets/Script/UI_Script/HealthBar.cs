@@ -15,6 +15,7 @@ public class HealthBar : MonoBehaviour
         healthBarImg = GetComponent<Image>();
     }
 
+    //플레이어의 체력에 변화가 생겼을 때 콜해주면 댐
     public void UpdateHealthBar(float health, float maxHealth)
     {
         healthBarImg.fillAmount = health / maxHealth;
