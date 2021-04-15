@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private float changeTP = 1f;
 
-
+    public float slowTP = 0.3f;
 
     private void Update()
     {

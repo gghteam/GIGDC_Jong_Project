@@ -13,17 +13,26 @@ public class Attack : MonoBehaviour
     public void Attack1()
     {
         if (Attacking)
+        {
             anime.SetInteger("Stack", 2);
+
+        }
         else
+        {
             anime.SetBool("EndAttack", true);
+        }     
         Attacking = false;
     }
     public void Attack2()
     {
         if (Attacking)
+        {
             anime.SetInteger("Stack", 3);
-        else 
+        }
+        else
+        {
             anime.SetBool("EndAttack", true);
+        }  
         Attacking = false;
     }
     public void Attack3()

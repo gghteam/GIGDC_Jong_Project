@@ -27,4 +27,12 @@ public class AttackRangeCheck : MonoBehaviour
 		//	canAttack = false;
 		//}
 	}
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+		if (collision.gameObject.tag.Equals("Player") && attackDelay < time)
+		{
+			canAttack = true;
+			time = 0f;
+		}
+	}
 }

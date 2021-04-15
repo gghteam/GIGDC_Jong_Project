@@ -820,7 +820,7 @@ GameObject:
   m_Component:
   - component: {fileID: 163996536}
   - component: {fileID: 163996537}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wolf_col
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -854,7 +854,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.000000029802322, y: -0.06265147}
+  m_Offset: {x: 0.000000029802322, y: -0.051447384}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -865,7 +865,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5288612, y: 0.39353403}
+  m_Size: {x: 0.5288612, y: 0.37112588}
   m_EdgeRadius: 0
 --- !u!1 &166937400
 GameObject:
@@ -1090,7 +1090,7 @@ GameObject:
   - component: {fileID: 204857859}
   - component: {fileID: 204857857}
   - component: {fileID: 204857858}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2405,6 +2405,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tpBar: {fileID: 1063742041}
   changeTP: 3
+  slowTP: 0.3
 --- !u!4 &382329486
 Transform:
   m_ObjectHideFlags: 0
@@ -3613,7 +3614,7 @@ GameObject:
   - component: {fileID: 660266466}
   - component: {fileID: 660266468}
   - component: {fileID: 660266467}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wolf_AttackRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3646,8 +3647,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7f4ab352d83b30429eea54e2991357e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canAttack: 0
-  attackDelay: 2
+  canAttack: 1
+  attackDelay: 4
   time: 0
 --- !u!61 &660266468
 BoxCollider2D:
@@ -3700,7 +3701,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 661811764}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 5.27, z: 0}
+  m_LocalPosition: {x: 0.72, y: 5.27, z: 0}
   m_LocalScale: {x: 5.3496504, y: 4.9141436, z: 8.42932}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4444,13 +4445,13 @@ GameObject:
   - component: {fileID: 792680761}
   - component: {fileID: 792680759}
   - component: {fileID: 792680760}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Wolf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &792680758
 Transform:
   m_ObjectHideFlags: 0
@@ -4459,7 +4460,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 792680757}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -12.27, y: 2.09, z: 4.5938}
+  m_LocalPosition: {x: -10.4, y: 2, z: 4.5938}
   m_LocalScale: {x: 7, y: 7, z: 1}
   m_Children:
   - {fileID: 163996536}
@@ -4573,8 +4574,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  attackZone: {fileID: 0}
-  isAttack: 0
+  onTarget: 0
+  canMove: 0
 --- !u!1 &823063854
 GameObject:
   m_ObjectHideFlags: 0
@@ -4663,7 +4664,7 @@ GameObject:
   m_Component:
   - component: {fileID: 825697942}
   - component: {fileID: 825697943}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: New Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4678,7 +4679,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 825697941}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.289, y: -0.258, z: 0}
+  m_LocalPosition: {x: 0.871, y: -0.029, z: 0}
   m_LocalScale: {x: 0.38454, y: 0.38454, z: 0}
   m_Children: []
   m_Father: {fileID: 204857854}
@@ -6366,8 +6367,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1212766284}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.68, y: 6.36, z: 0}
-  m_LocalScale: {x: 5.3496504, y: 4.9141436, z: 8.42932}
+  m_LocalPosition: {x: -2.14, y: 5.434, z: 0}
+  m_LocalScale: {x: 5.3496504, y: 4.7145486, z: 8.42932}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
