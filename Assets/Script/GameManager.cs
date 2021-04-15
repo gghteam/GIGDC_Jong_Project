@@ -4,10 +4,33 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    private static GameManager instance;
+
+    public static GameManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<GameManager>();
+
+                if (instance == null)
+                {
+                    GameObject temp = new GameObject("GameManager");
+                    instance = temp.AddComponent<GameManager>();
+                }
+            }
+
+            return instance;
+        }
+    }
+
     public TpBar tpBar = null;
 
     [SerializeField]
     private float changeTP = 1f;
+
+
 
     private void Update()
     {

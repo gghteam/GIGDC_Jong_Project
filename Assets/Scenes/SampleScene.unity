@@ -2404,7 +2404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tpBar: {fileID: 1063742041}
-  changeTP: 1
+  changeTP: 3
 --- !u!4 &382329486
 Transform:
   m_ObjectHideFlags: 0
