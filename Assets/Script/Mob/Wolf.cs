@@ -78,15 +78,16 @@ public class Wolf : MonoBehaviour
         check.canAttack = false;
         canMove = false;
         yield return new WaitForSeconds(1f);
-        
+
         DOTween.Clear();
-        //점프 공격
-        transform.DOJump(new Vector3(transform.position.x + 20*dir, 2,0), 2, 1, 1f);
+        //점프 공격들
+        transform.DOJump(new Vector3(transform.position.x + 20 * dir, 2, 0), 2, 1, 1f); // 이건 점프하는거 
+        //transform.DOBlendableLocalMoveBy(new Vector3(20 * dir, 0, 0), 1);               // 이건 돌진하는거 - 원하는대로 바꿔쓰세연
 
         yield return new WaitForSeconds(1f);
 
         Debug.Log("공격");
         canMove = true;
-        
+
     }
 }
