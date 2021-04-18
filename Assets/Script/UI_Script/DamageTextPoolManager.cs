@@ -56,4 +56,6 @@ public class DamageTextPoolManager : MonoBehaviour
         reqText.transform.position = pos;
         return reqText;
     }
+
+
 }
