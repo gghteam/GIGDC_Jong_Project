@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class PlayerStat : MonoBehaviour
+public class PlayerStat : MonoBehaviour, IDamageable
 {
     public int hp = 100;
     private PlayerScript playerScript;

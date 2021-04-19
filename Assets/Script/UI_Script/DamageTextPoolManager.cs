@@ -56,7 +56,7 @@ public class DamageTextPoolManager : MonoBehaviour
         };
 
         reqText.SetActive(true);
-        damageText = reqText.transform.GetComponent<TextMesh>();
+        damageText = reqText.GetComponent<TextMesh>();
 
         if (damageText.Equals(null))
         {

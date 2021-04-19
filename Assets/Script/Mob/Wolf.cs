@@ -39,10 +39,8 @@ public class Wolf : MonoBehaviour
         //플레이어가 어그로 범위 안으로 들어오면 인식 범위 늘어남
         if (collision.gameObject.CompareTag("Player"))
         {
-            range.size = new Vector2(range.size.x*2, range.size.y * 2);
+            range.size = new Vector2(range.size.x * 2, range.size.y * 2);
             onTarget = true;
-
-
         }
     }
     private void OnTriggerStay2D(Collider2D collision)
