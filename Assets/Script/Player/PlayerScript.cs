@@ -10,15 +10,17 @@ public class PlayerScript : MonoBehaviour
 
     public float JumpPower;
     public float Speed;
-    public float Gravity;
-
+    public float gravity = 0;
 
     private float time1 = 0; private float JumpTime = 0;
     
-    private float x = 0;
-    private float speedTemp = 0; private float jumpTemp = 0;
+    private float speedTemp = 0; 
+    private float jumpTemp = 0;
+
     private bool isJumping = false; 
     private bool isFall = false; // 낙하 중이면 true
+    private bool doubleJump = false;
+
     private Rigidbody2D rigidbody;
 
     private void Start()
@@ -56,7 +58,8 @@ public class PlayerScript : MonoBehaviour
             {
                 if (rayHit.distance > 0.2f)
                 {
-                    anime.SetBool("IsJumping", false); 
+                    anime.SetBool("IsJumping", false);
+                    doubleJump = false;
                     isJumping = false;
                 }
                 //Debug.Log(rayHit.collider.name);
@@ -72,10 +75,11 @@ public class PlayerScript : MonoBehaviour
 
     private void Jump()
     {
+        rigidbody.velocity = new Vector2(rigidbody.velocity.x, -gravity);
         //점프
         if (!isJumping)
         {
-            if (Input.GetKey(KeyCode.X))
+            if (Input.GetKey(KeyCode.X))// 처음 점프
             {
                 JumpTime += Time.deltaTime;
                 //JumpPower -= JumpTime * (jumpTemp / 10);
@@ -89,9 +93,9 @@ public class PlayerScript : MonoBehaviour
                 anime.SetBool("IsJumping", true);
             }
         }
-        else if (Input.GetKey(KeyCode.X)) 
+        else if (Input.GetKey(KeyCode.X)) // 두번째 점프
         {
-            if (!isFall)
+            if (!doubleJump)
             {
                 anime.Play("IsJumping");
                 isFall = false;
@@ -101,6 +105,7 @@ public class PlayerScript : MonoBehaviour
                 {
                     isFall = true;
                     JumpTime = 0;
+                    doubleJump = true;
                 }
             }
         }
@@ -108,7 +113,6 @@ public class PlayerScript : MonoBehaviour
         {
             //rigidbody.velocity = new Vector2(rigidbody.velocity.x, -Gravity);
             JumpPower = jumpTemp;
-            isFall = false;
         }
 
         //점프2
@@ -118,33 +122,31 @@ public class PlayerScript : MonoBehaviour
             isFall = true;
             JumpTime = 0;
             JumpPower = jumpTemp;
+            
         }
 
         //느리게 낙하
         if (isFall && Input.GetKey(KeyCode.X))
         { 
             Speed = speedTemp; 
-            Debug.Log("적용 중");
-            rigidbody.gravityScale = 80;
+            gravity = 2f;
         }
         else
         {
-            rigidbody.gravityScale = 210;
-            //Gravity = temp3; 
+            gravity = 10f;
         }
     }
 
     private void Move()
     {
         //움직이기
-        x = Input.GetAxis("Horizontal");
         if (anime.GetBool("IsRunning"))
         {
-            rigidbody.velocity = new Vector2(x * Speed * 1.2f, 0);
+            rigidbody.velocity = new Vector2(Input.GetAxis("Horizontal") * Speed * 1.2f, 0);
         }
         else
         {
-            rigidbody.velocity = new Vector2(x * Speed, 0);
+            rigidbody.velocity = new Vector2(Input.GetAxis("Horizontal") * Speed, 0);
         }
         //0.5초 후 달리기
         if (Input.GetButton("Horizontal"))
