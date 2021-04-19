@@ -37,7 +37,7 @@ public class Wolf : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //플레이어가 어그로 범위 안으로 들어오면 인식 범위 늘어남
-        if (collision.gameObject.tag.Equals("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             range.size = new Vector2(range.size.x*2, range.size.y * 2);
             onTarget = true;
@@ -47,7 +47,7 @@ public class Wolf : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag.Equals("Player") && !check.canAttack&&canMove)
+        if (collision.gameObject.CompareTag("Player") && !check.canAttack&&canMove)
         {
              transform.Translate(Vector2.left * speed * Time.deltaTime);
             //플레이어가 몹의 위치보다 오른쪽에 있다면 오른쪽 바라보게
@@ -67,7 +67,7 @@ public class Wolf : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         //플레이어가 어그로 범위 밖으로 나가면 인식 범위 줄어듬
-        if (collision.gameObject.tag.Equals("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             range.size = new Vector2(3f, 1.5f);
             onTarget = false;

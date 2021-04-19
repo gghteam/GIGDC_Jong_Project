@@ -5,24 +5,24 @@ using UnityEngine;
 
 public class DamageText : MonoBehaviour
 {
-    private Text damageText;
+    private TextMesh damageText;
 
     private Color textColor;
+    [SerializeField]
+    private Color originColor;
 
     [SerializeField]
     private float speed = 2f;
     [SerializeField]
-    private float alphaSpeed = 2f;
+    private float alphaSpeed = 1f;
     [SerializeField]
     private float destroyTime = 2f;
 
-    public int damage;
-
     private void Start()
     {
-        damageText = GetComponent<Text>();
+        damageText = GetComponent<TextMesh>();
+        damageText.color = originColor;
         textColor = damageText.color;
-
         Invoke("DestoryObj", destroyTime);
     }
 
@@ -37,5 +37,13 @@ public class DamageText : MonoBehaviour
     private void DestoryObj()
     {
         gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        damageText = GetComponent<TextMesh>();
+        damageText.color = originColor;
+        textColor = damageText.color;
+        Invoke("DestoryObj", destroyTime);
     }
 }

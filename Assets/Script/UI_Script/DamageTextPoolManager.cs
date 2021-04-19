@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DamageTextPoolManager : MonoBehaviour
 {
@@ -33,9 +34,10 @@ public class DamageTextPoolManager : MonoBehaviour
         }
     }
 
-    public GameObject GetDamageText(Vector3 pos)
+    public GameObject GetDamageText(Vector3 pos, float damage)
     {
         GameObject reqText = null;
+        TextMesh damageText = null;
 
         for (int i = 0; i < textList.Count; i++)
         {
@@ -47,12 +49,21 @@ public class DamageTextPoolManager : MonoBehaviour
         }
         if (reqText == null)
         {
-            GameObject newArrow = Instantiate(textPrefabs) as GameObject;
-            newArrow.transform.parent = this.transform;
-            textList.Add(newArrow);
-            reqText = newArrow;
-        }
+            GameObject newText = Instantiate(textPrefabs) as GameObject;
+            newText.transform.parent = this.transform;
+            textList.Add(newText);
+            reqText = newText;
+        };
+
         reqText.SetActive(true);
+        damageText = reqText.transform.GetComponent<TextMesh>();
+
+        if (damageText.Equals(null))
+        {
+            Debug.LogError("텍스트 속성을 가져오지 못했습니다");
+        }
+
+        damageText.text = damage.ToString();
         reqText.transform.position = pos;
         return reqText;
     }
