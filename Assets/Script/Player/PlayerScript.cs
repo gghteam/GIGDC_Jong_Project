@@ -9,24 +9,20 @@ public class PlayerScript : MonoBehaviour
     private PlayerStat stat;
 
     public float JumpPower;
-    public float JumpPowerLimit;
     public float Speed;
     public float Gravity;
 
-    private float RunSpeed;
 
     private float time1 = 0; private float JumpTime = 0;
     
     private float x = 0;
-    private float speedTemp = 0; private float jumpTemp = 0; private float temp3 = 0;
+    private float speedTemp = 0; private float jumpTemp = 0;
     private bool isJumping = false; 
-    private bool isDown = false; // 밑으로 내려가는 중이면 true
     private bool isFall = false; // 낙하 중이면 true
     private Rigidbody2D rigidbody;
 
     private void Start()
     {
-        RunSpeed = Mathf.Round(Speed * 1.2f);
         SR = gameObject.GetComponent<SpriteRenderer>();
         anime = gameObject.GetComponent<Animator>();
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
@@ -34,15 +30,14 @@ public class PlayerScript : MonoBehaviour
 
         speedTemp = Speed;
         jumpTemp = JumpPower;
-        temp3 = Gravity;
     }
     private void Update()
     {
         Move();
         Jump();
-        Limit();
         JumpRayCast();
 
+        //밑 코드는 데미지 테스트 코드 임다
         if(Input.GetKeyDown(KeyCode.D))
         {
             stat.OnDamage(10);
@@ -74,57 +69,52 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    private void Limit()
-    {
-        ////속도 제한 두기
-        //if (rigidbody.velocity.x > MaxSpeed)
-        //{
-        //    rigidbody.velocity = new Vector2(MaxSpeed, rigidbody.velocity.y);
-        //}
-        //else if (rigidbody.velocity.x < -MaxSpeed)
-        //{
-        //    rigidbody.velocity = new Vector2(-MaxSpeed, rigidbody.velocity.y);
-        //}
-
-        ////점프, 낙하 속도 제한 두기
-        //if (rigidbody.velocity.y > JumpPowerLimit * 3)
-        //{
-        //    rigidbody.velocity = new Vector2(rigidbody.velocity.x, JumpPowerLimit * 3);
-        //}
-        //else if (rigidbody.velocity.y < -JumpPowerLimit * 3)
-        //{
-        //    rigidbody.velocity = new Vector2(rigidbody.velocity.x, -JumpPowerLimit * 3);
-        //}
-    }
 
     private void Jump()
     {
         //점프
-        if (Input.GetKey(KeyCode.X) && !isJumping)
+        if (!isJumping)
         {
-            JumpTime += Time.deltaTime;
-            JumpPower -= JumpTime * (jumpTemp / 10);
-            rigidbody.velocity = new Vector2(rigidbody.velocity.x, JumpPower);
-            if (JumpTime >= 0.3f)
+            if (Input.GetKey(KeyCode.X))
             {
-                isJumping = true; 
-                isDown = true;
-                isFall = true;
-                JumpTime = 0;
+                JumpTime += Time.deltaTime;
+                //JumpPower -= JumpTime * (jumpTemp / 10);
+                rigidbody.velocity = new Vector2(rigidbody.velocity.x, JumpPower);
+                if (JumpTime >= 0.3f)
+                {
+                    isJumping = true;
+                    isFall = true;
+                    JumpTime = 0;
+                }
+                anime.SetBool("IsJumping", true);
             }
-            anime.SetBool("IsJumping", true);
+        }
+        else if (Input.GetKey(KeyCode.X)) 
+        {
+            if (!isFall)
+            {
+                anime.Play("IsJumping");
+                isFall = false;
+                rigidbody.velocity = new Vector2(rigidbody.velocity.x, JumpPower);
+                JumpTime += Time.deltaTime;
+                if (JumpTime >= 0.3f)
+                {
+                    isFall = true;
+                    JumpTime = 0;
+                }
+            }
         }
         else
         {
             //rigidbody.velocity = new Vector2(rigidbody.velocity.x, -Gravity);
             JumpPower = jumpTemp;
+            isFall = false;
         }
 
         //점프2
         if (Input.GetKeyUp(KeyCode.X))
         {
             isJumping = true;
-            isDown = false;
             isFall = true;
             JumpTime = 0;
             JumpPower = jumpTemp;
