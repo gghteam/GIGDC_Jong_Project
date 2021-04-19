@@ -51,7 +51,7 @@ public class Attack : MonoBehaviour
         {
             Attacking = true;
         }
-        if (anime.GetBool("IsRuning"))
+        if (anime.GetBool("IsRunning"))
         {
             if (Input.GetKeyDown(KeyCode.Z) && anime.GetInteger("Stack") == 0)
             {

@@ -1090,6 +1090,7 @@ GameObject:
   - component: {fileID: 204857859}
   - component: {fileID: 204857857}
   - component: {fileID: 204857858}
+  - component: {fileID: 204857860}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -1176,9 +1177,9 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 2
+  m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 100
   m_Material: {fileID: 0}
   m_Interpolate: 1
   m_SleepingMode: 1
@@ -1255,12 +1256,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb2f2b06f1586764f8f1f56d4151aa82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anime: {fileID: 0}
   SR: {fileID: 204857853}
-  RunSpeed: 25
-  JumpPower: 18
+  JumpPower: 30
   JumpPowerLimit: 20
-  MaxSpeed: 15
+  Speed: 18
   Gravity: 15
+--- !u!114 &204857860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 204857852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64b12aa5a85382e49b3bac6fb54ca70d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 100
 --- !u!1 &230146402
 GameObject:
   m_ObjectHideFlags: 0

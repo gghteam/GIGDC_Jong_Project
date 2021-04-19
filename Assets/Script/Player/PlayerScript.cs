@@ -4,36 +4,158 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-    private Animator anime;
+    public Animator anime;
     public SpriteRenderer SR;
+    private PlayerStat stat;
 
-    public float RunSpeed;
     public float JumpPower;
     public float JumpPowerLimit;
-    public float MaxSpeed;
+    public float Speed;
     public float Gravity;
 
-    private float time1 = 0; private float time2 = 0;
+    private float RunSpeed;
+
+    private float time1 = 0; private float JumpTime = 0;
     
     private float x = 0;
-    private float temp1 = 0; private float temp2 = 0; private float temp3 = 0;
-    private bool isJumping = false; private bool isDown = false; private bool isFall = false;
+    private float speedTemp = 0; private float jumpTemp = 0; private float temp3 = 0;
+    private bool isJumping = false; 
+    private bool isDown = false; // 밑으로 내려가는 중이면 true
+    private bool isFall = false; // 낙하 중이면 true
     private Rigidbody2D rigidbody;
+
     private void Start()
     {
+        RunSpeed = Mathf.Round(Speed * 1.2f);
         SR = gameObject.GetComponent<SpriteRenderer>();
         anime = gameObject.GetComponent<Animator>();
         rigidbody = gameObject.GetComponent<Rigidbody2D>();
-        temp1 = MaxSpeed;
-        temp2 = JumpPower;
+        stat = gameObject.GetComponent<PlayerStat>();
+
+        speedTemp = Speed;
+        jumpTemp = JumpPower;
         temp3 = Gravity;
     }
     private void Update()
     {
+        Move();
+        Jump();
+        Limit();
+        JumpRayCast();
+
+        if(Input.GetKeyDown(KeyCode.D))
+        {
+            stat.OnDamage(10);
+            Debug.Log(stat.hp);
+        }
+    }
+
+    private void JumpRayCast()
+    {
+        // 무한으로 즐기는 점프 방지하기
+        Debug.DrawRay(transform.position, Vector3.down, new Color(0, 1, 0));
+        RaycastHit2D rayHit = Physics2D.Raycast(transform.position, Vector2.down, 2, LayerMask.GetMask("Platform"));
+        if (rigidbody.velocity.y < 0.3f)
+        {
+            if (rayHit.collider != null)
+            {
+                if (rayHit.distance > 0.2f)
+                {
+                    anime.SetBool("IsJumping", false); 
+                    isJumping = false;
+                }
+                //Debug.Log(rayHit.collider.name);
+            }
+            else
+            {
+                anime.SetBool("IsJumping", true); 
+                isJumping = true;
+            }
+        }
+    }
+
+    private void Limit()
+    {
+        ////속도 제한 두기
+        //if (rigidbody.velocity.x > MaxSpeed)
+        //{
+        //    rigidbody.velocity = new Vector2(MaxSpeed, rigidbody.velocity.y);
+        //}
+        //else if (rigidbody.velocity.x < -MaxSpeed)
+        //{
+        //    rigidbody.velocity = new Vector2(-MaxSpeed, rigidbody.velocity.y);
+        //}
+
+        ////점프, 낙하 속도 제한 두기
+        //if (rigidbody.velocity.y > JumpPowerLimit * 3)
+        //{
+        //    rigidbody.velocity = new Vector2(rigidbody.velocity.x, JumpPowerLimit * 3);
+        //}
+        //else if (rigidbody.velocity.y < -JumpPowerLimit * 3)
+        //{
+        //    rigidbody.velocity = new Vector2(rigidbody.velocity.x, -JumpPowerLimit * 3);
+        //}
+    }
+
+    private void Jump()
+    {
+        //점프
+        if (Input.GetKey(KeyCode.X) && !isJumping)
+        {
+            JumpTime += Time.deltaTime;
+            JumpPower -= JumpTime * (jumpTemp / 10);
+            rigidbody.velocity = new Vector2(rigidbody.velocity.x, JumpPower);
+            if (JumpTime >= 0.3f)
+            {
+                isJumping = true; 
+                isDown = true;
+                isFall = true;
+                JumpTime = 0;
+            }
+            anime.SetBool("IsJumping", true);
+        }
+        else
+        {
+            //rigidbody.velocity = new Vector2(rigidbody.velocity.x, -Gravity);
+            JumpPower = jumpTemp;
+        }
+
+        //점프2
+        if (Input.GetKeyUp(KeyCode.X))
+        {
+            isJumping = true;
+            isDown = false;
+            isFall = true;
+            JumpTime = 0;
+            JumpPower = jumpTemp;
+        }
+
+        //느리게 낙하
+        if (isFall && Input.GetKey(KeyCode.X))
+        { 
+            Speed = speedTemp; 
+            Debug.Log("적용 중");
+            rigidbody.gravityScale = 80;
+        }
+        else
+        {
+            rigidbody.gravityScale = 210;
+            //Gravity = temp3; 
+        }
+    }
+
+    private void Move()
+    {
         //움직이기
         x = Input.GetAxis("Horizontal");
-        rigidbody.velocity = (new Vector2(x * MaxSpeed, 0));
-
+        if (anime.GetBool("IsRunning"))
+        {
+            rigidbody.velocity = new Vector2(x * Speed * 1.2f, 0);
+        }
+        else
+        {
+            rigidbody.velocity = new Vector2(x * Speed, 0);
+        }
         //0.5초 후 달리기
         if (Input.GetButton("Horizontal"))
         {
@@ -42,13 +164,13 @@ public class PlayerScript : MonoBehaviour
                 time1 += Time.deltaTime;
                 if (time1 >= 0.5f)
                 {
-                    anime.SetBool("IsRuning", true);
+                    anime.SetBool("IsRunning", true);
                 }
             }
         }
         else
         {
-            time1 = 0; anime.SetBool("IsRuning", false);
+            time1 = 0; anime.SetBool("IsRunning", false);
         }
 
         //방향전환
@@ -58,7 +180,7 @@ public class PlayerScript : MonoBehaviour
         }
 
         // 걷는 애니메이션
-        if (!anime.GetBool("IsRuning"))
+        if (!anime.GetBool("IsRunning"))
         {
             if (Mathf.Abs(rigidbody.velocity.x) < 0.2f)
                 anime.SetBool("IsWalking", false);
@@ -66,81 +188,5 @@ public class PlayerScript : MonoBehaviour
                 anime.SetBool("IsWalking", true);
         }
 
-       //점프
-        if (Input.GetKey(KeyCode.X) && !isJumping && !isDown)
-        {
-            time2 += Time.deltaTime;
-            JumpPower -= time2 * (temp2/10);
-            rigidbody.velocity = new Vector2(rigidbody.velocity.x, JumpPower);
-            if (time2 >= 0.3f)
-            {
-                isJumping = true; isDown = true;
-                time2 = 0;
-            }
-            anime.SetBool("IsJumping", true);
-        }
-        else
-        {
-            rigidbody.velocity = new Vector2(rigidbody.velocity.x, -Gravity); JumpPower = temp2;
-        }
-
-        //느리게 낙하
-        if(isJumping && Input.GetKey(KeyCode.X))
-        {
-            rigidbody.velocity = new Vector2(rigidbody.velocity.x, -5); isFall = true; MaxSpeed = temp1; Debug.Log("적용 중");
-        }
-        else
-        {
-            Gravity = temp3; isFall = false;
-        }
-
-        //점프2
-        if (Input.GetKeyUp(KeyCode.X)) { isJumping = true; isDown = false; time2 = 0; JumpPower = temp2; }
-
-        //달리면 속도 빨라지기
-        if (anime.GetBool("IsRuning"))
-            MaxSpeed = RunSpeed;
-        else
-            MaxSpeed = temp1;
-
-        //속도 제한 두기
-        if (rigidbody.velocity.x > MaxSpeed)
-        {
-            rigidbody.velocity = new Vector2(MaxSpeed, rigidbody.velocity.y);
-        }
-        else if (rigidbody.velocity.x < -MaxSpeed)
-        {
-            rigidbody.velocity = new Vector2(-MaxSpeed, rigidbody.velocity.y);
-        }
-
-        //점프, 낙하 속도 제한 두기
-        if (rigidbody.velocity.y > JumpPowerLimit * 3)
-        {
-            rigidbody.velocity = new Vector2(rigidbody.velocity.x, JumpPowerLimit * 3);
-        }
-        else if (rigidbody.velocity.y < -JumpPowerLimit * 3)
-        {
-            rigidbody.velocity = new Vector2(rigidbody.velocity.x, -JumpPowerLimit * 3);
-        }
-
-        // 무한으로 즐기는 점프 방지하기
-        Debug.DrawRay(transform.position, Vector3.down, new Color(0, 1, 0));
-        RaycastHit2D rayHit = Physics2D.Raycast(transform.position, Vector2.down, 2, LayerMask.GetMask("Platform"));
-        if(rigidbody.velocity.y < 0.3f)
-        {
-            if (rayHit.collider != null)
-            {
-                if (rayHit.distance > 0.2f)
-                {
-                    anime.SetBool("IsJumping", false); isJumping = false;
-                }
-                //Debug.Log(rayHit.collider.name);
-            }
-            else
-            {
-                anime.SetBool("IsJumping", true); isJumping = true;
-            }
-           
-        }
     }
 }
