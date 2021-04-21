@@ -1259,9 +1259,8 @@ MonoBehaviour:
   anime: {fileID: 0}
   SR: {fileID: 204857853}
   JumpPower: 30
-  JumpPowerLimit: 20
   Speed: 18
-  Gravity: 15
+  gravity: 0
 --- !u!114 &204857860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1762,7 +1761,7 @@ GameObject:
   - component: {fileID: 292112747}
   m_Layer: 8
   m_Name: P (4)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2642,7 +2641,7 @@ GameObject:
   - component: {fileID: 453725900}
   m_Layer: 8
   m_Name: P (2)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3522,7 +3521,7 @@ GameObject:
   - component: {fileID: 657616615}
   m_Layer: 8
   m_Name: P
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4118,7 +4117,7 @@ GameObject:
   - component: {fileID: 724698886}
   m_Layer: 8
   m_Name: P (5)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4226,7 +4225,7 @@ GameObject:
   - component: {fileID: 752066415}
   m_Layer: 8
   m_Name: P (3)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4460,13 +4459,14 @@ GameObject:
   - component: {fileID: 792680763}
   - component: {fileID: 792680759}
   - component: {fileID: 792680760}
+  - component: {fileID: 792680764}
   m_Layer: 10
   m_Name: Wolf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &792680758
 Transform:
   m_ObjectHideFlags: 0
@@ -4604,9 +4604,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   count: 10
-  textColor: {r: 1, g: 1, b: 1, a: 1}
   textPrefabs: {fileID: 6861391115911926220, guid: 75a85fbb286348249a352d51b0e4ea75,
     type: 3}
+--- !u!61 &792680764
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792680757}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.64, y: 0.64}
+    newSize: {x: 0.64, y: 0.64}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.64, y: 0.64}
+  m_EdgeRadius: 0
 --- !u!1 &823063854
 GameObject:
   m_ObjectHideFlags: 0
@@ -5684,7 +5709,7 @@ GameObject:
   - component: {fileID: 1092689218}
   m_Layer: 8
   m_Name: P (6)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10380,7 +10405,7 @@ GameObject:
   - component: {fileID: 2045097661}
   m_Layer: 8
   m_Name: P (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

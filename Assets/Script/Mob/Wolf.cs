@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 using DG.Tweening;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 public class Wolf : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class Wolf : MonoBehaviour
     public bool canMove;
     private int dir = 1;
 
+    RaycastHit2D hit;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +32,6 @@ public class Wolf : MonoBehaviour
         {
             StartCoroutine(WolfAttack());
         }
-
     }
 
     // Update is called once per frame
@@ -79,10 +80,25 @@ public class Wolf : MonoBehaviour
 
         DOTween.Clear();
         //점프 공격들
-        transform.DOJump(new Vector3(transform.position.x + 20 * dir, 2, 0), 2, 1, 1f); // 이건 점프하는거 
-        //transform.DOBlendableLocalMoveBy(new Vector3(20 * dir, 0, 0), 1);               // 이건 돌진하는거 - 원하는대로 바꿔쓰세연
 
-        yield return new WaitForSeconds(1f);
+        //transform.DOJump(new Vector3(transform.position.x + 20 * dir, 2, 0), 2, 1, 1f); // 이건 점프하는거 
+        for (int i = 0; i < 10; i++)
+        {
+            Debug.DrawRay(transform.position, Vector3.forward, Color.blue, 0.3f);
+            if (Physics2D.Raycast(transform.position, Vector3.right,10, LayerMask.GetMask("Platform")))
+            {
+                Debug.Log("AS");
+                if (hit.transform.gameObject.CompareTag("Ground"))
+                {
+                    Debug.Log("ASD");
+                   // canMove = false;
+                    break;
+                }
+            }
+           transform.DOBlendableLocalMoveBy(new Vector3(1 * dir, 0, 0), 1);               // 이건 돌진하는거 - 원하는대로 바꿔쓰세연  
+        }
+        
+
 
         Debug.Log("공격");
         canMove = true;
