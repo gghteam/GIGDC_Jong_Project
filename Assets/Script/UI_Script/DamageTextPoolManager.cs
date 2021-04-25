@@ -23,6 +23,11 @@ public class DamageTextPoolManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        CreatePrefabs(10);
+    }
+
     public void CreatePrefabs(int count)
     {
         for (int i = 0; i < count; i++)

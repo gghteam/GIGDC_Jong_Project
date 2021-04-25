@@ -24,6 +24,7 @@ public class Stat : MonoBehaviour, IDamageable
 
         hp -= reqDamage;
 
+        Debug.Log(reqDamage);
         textPoolManager.GetDamageText(transform.position, reqDamage);
     }
 }

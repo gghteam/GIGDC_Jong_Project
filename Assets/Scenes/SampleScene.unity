@@ -1216,7 +1216,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64b12aa5a85382e49b3bac6fb54ca70d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHp: 100
   hp: 100
+  playerHealth: {fileID: 1471773569}
 --- !u!1 &230146402
 GameObject:
   m_ObjectHideFlags: 0
@@ -10589,5 +10591,40 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wolf
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7557369872093602246, guid: 52120e0f6ac8b4446904b6d873ef7b55, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 52120e0f6ac8b4446904b6d873ef7b55, type: 3}
+--- !u!1 &7557369871606987008 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7557369871459801992, guid: 52120e0f6ac8b4446904b6d873ef7b55,
+    type: 3}
+  m_PrefabInstance: {fileID: 7557369871606987007}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7557369871606987009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7557369871606987008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96655b52640ee5c4db22dbcd877b80f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 20
+  exp: 0
+  atk: 2
+  def: 0
+--- !u!114 &7557369871606987012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7557369871606987008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2b95167c2611034bafe5c1c6abbe0b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
