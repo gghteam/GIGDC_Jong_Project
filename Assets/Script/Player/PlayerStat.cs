@@ -20,8 +20,6 @@ public class PlayerStat : MonoBehaviour, IDamageable
 
     public void OnDamage(int damage)
     {
-        Debug.Log(damage);
-
         hp -= damage;
         playerHealth.UpdateHealthBar(hp, maxHp);
         playerScript.anime.Play("Hit");

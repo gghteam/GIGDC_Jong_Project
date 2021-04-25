@@ -10,11 +10,6 @@ public class HealthBar : MonoBehaviour
     [SerializeField]
     private Image healthBarImg;
 
-    private void Start()
-    {
-        healthBarImg = GetComponent<Image>();
-    }
-
     //플레이어의 체력에 변화가 생겼을 때 콜해주면 댐
     public void UpdateHealthBar(float health, float maxHealth)
     {
