@@ -5,18 +5,25 @@ using DG.Tweening;
 
 public class PlayerStat : MonoBehaviour, IDamageable
 {
+    public int maxHp = 100;
     public int hp = 100;
     private PlayerScript playerScript;
+    [SerializeField]
+    private HealthBar playerHealth;
     //이외의 스텟들
 
     private void Awake()
     {
-        playerScript = gameObject.GetComponent<PlayerScript>(); 
+        playerScript = gameObject.GetComponent<PlayerScript>();
+        hp = maxHp;
     }
 
     public void OnDamage(int damage)
     {
+        Debug.Log(damage);
+
         hp -= damage;
+        playerHealth.UpdateHealthBar(hp, maxHp);
         playerScript.anime.Play("Hit");
         if(hp <= 0)
         {
