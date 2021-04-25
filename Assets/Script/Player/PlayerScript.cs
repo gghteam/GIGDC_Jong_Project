@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
@@ -11,15 +12,19 @@ public class PlayerScript : MonoBehaviour
     public float JumpPower;
     public float Speed;
     public float gravity = 0;
+    public float beforeJumpY = 0f;
 
     private float time1 = 0; private float JumpTime = 0;
     
     private float speedTemp = 0; 
     private float jumpTemp = 0;
 
-    private bool isJumping = false; 
+    private bool endJump = false;
+    private bool getKey = false;
     private bool isFall = false; // 낙하 중이면 true
+    [SerializeField]
     private bool doubleJump = false;
+    private bool KeyUp = false;
 
     private Rigidbody2D rigidbody;
 
@@ -60,82 +65,134 @@ public class PlayerScript : MonoBehaviour
                 {
                     anime.SetBool("IsJumping", false);
                     doubleJump = false;
-                    isJumping = false;
+                    endJump = false;
                 }
                 //Debug.Log(rayHit.collider.name);
             }
             else
             {
                 anime.SetBool("IsJumping", true); 
-                isJumping = true;
+                endJump = true;
             }
         }
     }
-
 
     private void Jump()
     {
         rigidbody.velocity = new Vector2(rigidbody.velocity.x, -gravity);
-        //점프
-        if (!isJumping)
+        if (doubleJump)
         {
-            if (Input.GetKey(KeyCode.X))// 처음 점프
+            if (Input.GetKeyDown(KeyCode.X))
             {
-                JumpTime += Time.deltaTime;
-                //JumpPower -= JumpTime * (jumpTemp / 10);
+                beforeJumpY = transform.position.y;
+                getKey = true;
+
+            }
+            if (Input.GetKey(KeyCode.X) && getKey)
+            {
                 rigidbody.velocity = new Vector2(rigidbody.velocity.x, JumpPower);
-                if (JumpTime >= 0.3f)
+                if (transform.position.y > beforeJumpY + 5)
                 {
-                    isJumping = true;
-                    isFall = true;
-                    JumpTime = 0;
+                    doubleJump = false;
+                    getKey = false;
                 }
                 anime.SetBool("IsJumping", true);
             }
-        }
-        else if (Input.GetKey(KeyCode.X)) // 두번째 점프
-        {
-            if (!doubleJump)
+            if (Input.GetKeyUp(KeyCode.X))
             {
-                anime.Play("IsJumping");
-                isFall = false;
-                rigidbody.velocity = new Vector2(rigidbody.velocity.x, JumpPower);
-                JumpTime += Time.deltaTime;
-                if (JumpTime >= 0.3f)
-                {
-                    isFall = true;
-                    JumpTime = 0;
-                    doubleJump = true;
-                }
+                getKey = true;
+                doubleJump = false;
             }
         }
-        else
+        if (!endJump)
         {
-            //rigidbody.velocity = new Vector2(rigidbody.velocity.x, -Gravity);
-            JumpPower = jumpTemp;
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                beforeJumpY = transform.position.y;
+                getKey = true;
+                
+            }
+            if (Input.GetKey(KeyCode.X)&& getKey)
+            {
+                rigidbody.velocity = new Vector2(rigidbody.velocity.x, JumpPower);
+                if (transform.position.y > beforeJumpY + 5)
+                {
+                    StartCoroutine("EndJump_True");
+                    getKey = false;
+                }
+                anime.SetBool("IsJumping", true);
+            }
+            if (Input.GetKeyUp(KeyCode.X))
+            {
+                getKey = true;
+                doubleJump = true;
+            }
         }
 
-        //점프2
-        if (Input.GetKeyUp(KeyCode.X))
-        {
-            isJumping = true;
-            isFall = true;
-            JumpTime = 0;
-            JumpPower = jumpTemp;
-            
-        }
-
-        //느리게 낙하
-        if (isFall && Input.GetKey(KeyCode.X))
-        { 
-            Speed = speedTemp; 
-            gravity = 2f;
-        }
-        else
-        {
-            gravity = 10f;
-        }
     }
+    //private void Jump()
+    //{
+    //    rigidbody.velocity = new Vector2(rigidbody.velocity.x, -gravity);
+    //    //점프
+    //    if (!endJump)
+    //    {
+    //        if (Input.GetKey(KeyCode.X))// 처음 점프
+    //        {
+    //            JumpTime += Time.deltaTime;
+    //            //JumpPower -= JumpTime * (jumpTemp / 10);
+    //            rigidbody.velocity = new Vector2(rigidbody.velocity.x, JumpPower);
+    //            if (JumpTime >= 0.3f)
+    //            {
+    //                endJump = true;
+    //                isFall = true;
+    //                JumpTime = 0;
+    //            }
+    //            anime.SetBool("endJump", true);
+    //        }
+    //    }
+    //    else if (Input.GetKey(KeyCode.X)) // 두번째 점프
+    //    {
+    //        if (!doubleJump)
+    //        {
+    //            anime.Play("endJump");
+    //            isFall = false;
+    //            rigidbody.velocity = new Vector2(rigidbody.velocity.x, JumpPower);
+    //            JumpTime += Time.deltaTime;
+    //            if (JumpTime >= 0.3f)
+    //            {
+    //                isFall = true;
+    //                JumpTime = 0;
+    //                doubleJump = true;
+    //            }
+    //        }
+    //    }
+    //    else
+    //    {
+    //        //rigidbody.velocity = new Vector2(rigidbody.velocity.x, -Gravity);
+    //        JumpPower = jumpTemp;
+    //    }
+
+    //    //점프2
+    //    if (Input.GetKeyUp(KeyCode.X))
+    //    {
+    //        endJump = true;
+    //        isFall = true;
+    //        JumpTime = 0;
+    //        JumpPower = jumpTemp;
+
+    //    }
+
+    //    //느리게 낙하
+    //    if (isFall && Input.GetKey(KeyCode.X))
+    //    { 
+    //        Speed = speedTemp; 
+    //        gravity = 2f;
+    //    }
+    //    else
+    //    {
+    //        gravity = 10f;
+    //    }
+    //}
 
     private void Move()
     {
@@ -180,5 +237,11 @@ public class PlayerScript : MonoBehaviour
                 anime.SetBool("IsWalking", true);
         }
 
+    }
+
+    private IEnumerator EndJump_True()
+    {
+        yield return new WaitForSeconds(1f);
+        endJump = true;
     }
 }
