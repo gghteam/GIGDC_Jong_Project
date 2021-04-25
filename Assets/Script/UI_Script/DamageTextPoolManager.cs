@@ -25,7 +25,7 @@ public class DamageTextPoolManager : MonoBehaviour
 
     private void Start()
     {
-        CreatePrefabs(10);
+        CreatePrefabs(count);
     }
 
     public void CreatePrefabs(int count)
