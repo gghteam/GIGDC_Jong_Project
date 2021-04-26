@@ -5,7 +5,6 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
-
     public static GameManager Instance
     {
         get
@@ -25,24 +24,85 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public TpBar tpBar = null;
+    [SerializeField][Header("다른 게임오브젝트들")]
+    private TpBar tpBar;
+    [SerializeField]
+    private GameObject charger;
+
+    [SerializeField][Header("변수들")]
+    public float curTP;
+    public float maxTP = 100;
 
     [SerializeField]
-    private float changeTP = 1f;
+    private float minusTP = 1f; //초당 -하는 TP 양
+    public float slowTP = 1f; //나중에 0.3으로 바꿔줄 변수 (슬로우)
 
-    public float slowTP = 1f; //나중에 0.3으로 바꿔줄 변수
+    [SerializeField]
+    private bool isTPon = false;
+    private bool charge = false;
+
+    private void Start()
+    {
+        curTP = maxTP;
+        charger.SetActive(false);
+    }
 
     private void Update()
     {
-        if(Input.GetKey(KeyCode.S))
+        if(Input.GetKeyDown(KeyCode.S))
         {
-            tpBar.UpdateTPBar(-changeTP * Time.deltaTime);
+            isTPon = !isTPon;
+        }
 
-            slowTP = 0.3f;
+        if (isTPon)
+        {
+            ChangeTP(-minusTP * Time.deltaTime);
+            slowTP = 0f;
         }
         else
         {
+            charge = false;
+            charger.SetActive(false);
             slowTP = 1f;
         }
+    }
+
+    public void ChangeTP(float tp)
+    {
+        if(!charge)
+        {
+            if (curTP <= 0)
+            {
+                curTP = 0;
+                Debug.Log("TP가 없씀!");
+
+                charger.SetActive(true);
+
+                charge = true;
+            }
+            else
+            {
+                curTP += tp;
+
+                if (curTP > maxTP) curTP = maxTP;
+                tpBar.UpdateTPBar();
+            }
+        }
+    }
+
+    public void UpdateTPBar()
+    {
+        tpBar.UpdateTPBar();
+    }
+
+    public void Charge(float tp)
+    {
+        if (curTP > maxTP)
+        {
+            curTP = maxTP;
+            return;
+        }
+
+        curTP += tp;
     }
 }
