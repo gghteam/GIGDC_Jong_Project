@@ -33,13 +33,13 @@ public class WolfRange : MonoBehaviour
             //플레이어가 몹의 위치보다 오른쪽에 있다면 오른쪽 바라보게
             if (collision.gameObject.transform.position.x > transform.position.x)
             {
-                wolfObj.transform.rotation = new Quaternion(0, 180, 0, 0);
+                wolfObj.transform.rotation = Quaternion.Euler(Vector2.right);
                 wolf.dir = 1;
             }
             //플레이어가 몹의 위치보다 왼쪽에 있다면 왼쪽 바라보게
             else
             {
-                wolfObj.transform.rotation = new Quaternion(0, 0, 0, 0);
+                wolfObj.transform.rotation = Quaternion.Euler(Vector2.left);
                 wolf.dir = -1;
             }
         }
