@@ -71,13 +71,12 @@ public class GameManager : MonoBehaviour
     {
         if(!charge)
         {
-            if (curTP <= 0)
+            if (curTP < 0)
             {
                 curTP = 0;
                 Debug.Log("TP가 없씀!");
 
                 charger.SetActive(true);
-
                 charge = true;
             }
             else
@@ -90,19 +89,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void UpdateTPBar()
-    {
-        tpBar.UpdateTPBar();
-    }
-
     public void Charge(float tp)
     {
-        if (curTP > maxTP)
+        if (curTP + tp > maxTP)
         {
             curTP = maxTP;
             return;
         }
 
         curTP += tp;
+        tpBar.UpdateTPBar();
     }
 }

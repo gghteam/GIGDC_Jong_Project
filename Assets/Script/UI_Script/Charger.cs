@@ -83,7 +83,6 @@ public class Charger : MonoBehaviour
         if(rollCount == 4)
         {
             GameManager.Instance.Charge(chargeTP);
-            GameManager.Instance.UpdateTPBar();
             rollCount = 0;
         }
     }

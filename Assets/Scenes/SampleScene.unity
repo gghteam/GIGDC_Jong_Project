@@ -2369,8 +2369,9 @@ MonoBehaviour:
   charger: {fileID: 1220179697}
   curTP: 0
   maxTP: 100
-  minusTP: 1
+  minusTP: 100
   slowTP: 0.3
+  isTPon: 0
 --- !u!4 &382329486
 Transform:
   m_ObjectHideFlags: 0
