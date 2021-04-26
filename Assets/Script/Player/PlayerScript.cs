@@ -25,7 +25,6 @@ public class PlayerScript : MonoBehaviour
     private bool doubleJump = false;
     [SerializeField]
     private bool endJump = false;
-    private bool KeyUp = false;
 
     private Rigidbody2D rigidbody;
 
@@ -130,70 +129,6 @@ public class PlayerScript : MonoBehaviour
         }
 
     }
-    //private void Jump()
-    //{
-    //    rigidbody.velocity = new Vector2(rigidbody.velocity.x, -gravity);
-    //    //점프
-    //    if (!endJump)
-    //    {
-    //        if (Input.GetKey(KeyCode.X))// 처음 점프
-    //        {
-    //            JumpTime += Time.deltaTime;
-    //            //JumpPower -= JumpTime * (jumpTemp / 10);
-    //            rigidbody.velocity = new Vector2(rigidbody.velocity.x, JumpPower);
-    //            if (JumpTime >= 0.3f)
-    //            {
-    //                endJump = true;
-    //                isFall = true;
-    //                JumpTime = 0;
-    //            }
-    //            anime.SetBool("endJump", true);
-    //        }
-    //    }
-    //    else if (Input.GetKey(KeyCode.X)) // 두번째 점프
-    //    {
-    //        if (!doubleJump)
-    //        {
-    //            anime.Play("endJump");
-    //            isFall = false;
-    //            rigidbody.velocity = new Vector2(rigidbody.velocity.x, JumpPower);
-    //            JumpTime += Time.deltaTime;
-    //            if (JumpTime >= 0.3f)
-    //            {
-    //                isFall = true;
-    //                JumpTime = 0;
-    //                doubleJump = true;
-    //            }
-    //        }
-    //    }
-    //    else
-    //    {
-    //        //rigidbody.velocity = new Vector2(rigidbody.velocity.x, -Gravity);
-    //        JumpPower = jumpTemp;
-    //    }
-
-    //    //점프2
-    //    if (Input.GetKeyUp(KeyCode.X))
-    //    {
-    //        endJump = true;
-    //        isFall = true;
-    //        JumpTime = 0;
-    //        JumpPower = jumpTemp;
-
-    //    }
-
-    //    //느리게 낙하
-    //    if (isFall && Input.GetKey(KeyCode.X))
-    //    { 
-    //        Speed = speedTemp; 
-    //        gravity = 2f;
-    //    }
-    //    else
-    //    {
-    //        gravity = 10f;
-    //    }
-    //}
-
     private void Move()
     {
         //움직이기
