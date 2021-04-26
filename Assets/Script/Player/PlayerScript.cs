@@ -19,12 +19,17 @@ public class PlayerScript : MonoBehaviour
     private float speedTemp = 0; 
     private float jumpTemp = 0;
 
-    private bool isFall = false; // 낙하 중이면 true
-    private bool firstJump = false;
+    private enum JumpState
+    {
+        NotJump,
+        Falling,
+        FirstJump,
+        SecoundJump
+    }
+
     [SerializeField]
-    private bool doubleJump = false;
-    [SerializeField]
-    private bool endJump = false;
+    JumpState jumpState;
+    JumpState beforeState;
 
     private Rigidbody2D rigidbody;
 
@@ -37,6 +42,8 @@ public class PlayerScript : MonoBehaviour
 
         speedTemp = Speed;
         jumpTemp = JumpPower;
+
+        jumpState = JumpState.NotJump;
     }
     private void Update()
     {
@@ -63,9 +70,8 @@ public class PlayerScript : MonoBehaviour
             {
                 if (rayHit.distance > 0.2f)
                 {
+                    jumpState = JumpState.NotJump;
                     anime.SetBool("IsJumping", false);
-                    endJump = false;
-                    firstJump = false;
                 }
                 //Debug.Log(rayHit.collider.name);
             }
@@ -79,55 +85,61 @@ public class PlayerScript : MonoBehaviour
 
     private void Jump()
     {
-        rigidbody.velocity = new Vector2(rigidbody.velocity.x, -gravity);
-
-        if (!firstJump)
+        if(jumpState == JumpState.Falling)
         {
-            if (Input.GetKeyDown(KeyCode.X))
+            rigidbody.velocity = new Vector2(rigidbody.velocity.x, -gravity);
+        }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            switch (jumpState)
             {
-                beforeJumpY = transform.position.y;
-                anime.SetBool("IsJumping", false);
+                case JumpState.NotJump:
+                    jumpState = JumpState.FirstJump;
+                    beforeJumpY = transform.position.y;
+                    break;
+                case JumpState.FirstJump:
+                    break;
+                case JumpState.Falling:
+                    if(beforeState == JumpState.FirstJump)
+                    {
+                        beforeJumpY = transform.position.y;
+                        jumpState = JumpState.SecoundJump;
+                    }
+                    break;
+            }
+        }
+
+        if (Input.GetKey(KeyCode.X))
+        {
+            if (jumpState != JumpState.Falling && jumpState != JumpState.NotJump)
+            {
                 anime.SetBool("IsJumping", true);
-            }
-            if (Input.GetKey(KeyCode.X))
-            {
                 rigidbody.velocity = new Vector2(rigidbody.velocity.x, JumpPower);
+
                 if (transform.position.y > beforeJumpY + 5)
                 {
-                    Debug.Log("fffff");
-                    firstJump = true;
+                    beforeState = jumpState;
+                    jumpState = JumpState.Falling;
                 }
-            }
-            if (Input.GetKeyUp(KeyCode.X))
-            {
-                firstJump = true;
-            }
-        }
-        else if(!endJump)
-        {
-            if (Input.GetKeyDown(KeyCode.X))
-            {
-                beforeJumpY = transform.position.y;
-                doubleJump = true;
-            }
-            if (Input.GetKey(KeyCode.X) && doubleJump)
-            {
-                Debug.Log("ddddd");
-                rigidbody.velocity = new Vector2(rigidbody.velocity.x, JumpPower);
-                if (transform.position.y > beforeJumpY + 5)
-                {
-                    doubleJump = false;
-                    endJump = true;
-                }
-                
-            }
-            if (Input.GetKeyUp(KeyCode.X) && doubleJump)
-            {
-                doubleJump = false;
-                endJump = true;
             }
         }
 
+        if (Input.GetKeyUp(KeyCode.X))
+        {
+            if (jumpState == JumpState.FirstJump)
+            {
+                beforeState = jumpState;
+                anime.SetBool("IsJumping", false);
+                jumpState = JumpState.Falling;
+            }
+            else if (jumpState == JumpState.SecoundJump)
+            {
+                beforeState = jumpState;
+                anime.SetBool("IsJumping", false);
+                jumpState = JumpState.Falling;
+            }
+        }
     }
     private void Move()
     {
@@ -143,13 +155,10 @@ public class PlayerScript : MonoBehaviour
         //0.5초 후 달리기
         if (Input.GetButton("Horizontal"))
         {
-            if (!isFall)
+            time1 += Time.deltaTime;
+            if (time1 >= 0.5f)
             {
-                time1 += Time.deltaTime;
-                if (time1 >= 0.5f)
-                {
-                    anime.SetBool("IsRunning", true);
-                }
+                anime.SetBool("IsRunning", true);
             }
         }
         else
@@ -172,12 +181,5 @@ public class PlayerScript : MonoBehaviour
                 anime.SetBool("IsWalking", true);
         }
 
-    }
-
-    private IEnumerator Anime_IsJumping()
-    {
-        anime.SetBool("IsJumping", false);
-        yield return new WaitForSeconds(0.1f);
-        anime.SetBool("IsJumping", true);
     }
 }

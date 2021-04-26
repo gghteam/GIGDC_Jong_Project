@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        slowTP = 0;
         curTP = maxTP;
         charger.SetActive(false);
     }
@@ -57,7 +58,6 @@ public class GameManager : MonoBehaviour
         if (isTPon)
         {
             ChangeTP(-minusTP * Time.deltaTime);
-            slowTP = 0f;
         }
         else
         {
@@ -76,11 +76,15 @@ public class GameManager : MonoBehaviour
                 curTP = 0;
                 Debug.Log("TP가 없씀!");
 
+                slowTP = 0.3f;
+
                 charger.SetActive(true);
                 charge = true;
             }
             else
             {
+                slowTP = 0f;
+
                 curTP += tp;
 
                 if (curTP > maxTP) curTP = maxTP;
