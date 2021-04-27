@@ -10,9 +10,11 @@ public class TpBar : MonoBehaviour
     [SerializeField]
     private Image tpBar = null;
 
-    public void UpdateTPBar()
+    public void UpdateTPBar(bool isCharge,float amount)
     {
-        tpText.text = string.Concat("TP:" + Mathf.Round(GameManager.Instance.curTP));
-        tpBar.fillAmount = GameManager.Instance.curTP / 100;
+        gameObject.SetActive(isCharge);
+
+        tpText.text = string.Concat("TP:" + Mathf.Round(amount));
+        tpBar.fillAmount = amount / 100;
     }
 }

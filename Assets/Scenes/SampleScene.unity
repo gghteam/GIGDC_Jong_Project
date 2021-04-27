@@ -1034,10 +1034,11 @@ GameObject:
   - component: {fileID: 204857853}
   - component: {fileID: 204857856}
   - component: {fileID: 204857855}
-  - component: {fileID: 204857859}
   - component: {fileID: 204857857}
+  - component: {fileID: 204857859}
   - component: {fileID: 204857858}
   - component: {fileID: 204857860}
+  - component: {fileID: 204857861}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -1225,6 +1226,22 @@ MonoBehaviour:
   maxHp: 100
   hp: 100
   playerHealth: {fileID: 1471773569}
+--- !u!114 &204857861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 204857852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ce1bde50a4f17c49b2f1976f17a34c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxTP: 0
+  curTP: 0
+  slowScale: 0.3
+  minusTP: 5
 --- !u!1 &230146402
 GameObject:
   m_ObjectHideFlags: 0
@@ -2369,11 +2386,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tpBar: {fileID: 1063742041}
   charger: {fileID: 1220179697}
-  curTP: 0
-  maxTP: 100
-  minusTP: 100
-  slowTP: 0.3
-  isTPon: 0
+  PlayerTPScript: {fileID: 204857861}
 --- !u!4 &382329486
 Transform:
   m_ObjectHideFlags: 0
@@ -7379,15 +7392,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f310256236d381340918ce51d1cb734e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftSprite: {fileID: -1371730293959630443, guid: 085d9b72bb14d4e4a8b416073ec2302d,
-    type: 3}
-  rightprite: {fileID: 8437762322901192239, guid: 085d9b72bb14d4e4a8b416073ec2302d,
-    type: 3}
-  upSprite: {fileID: 7259597191629325265, guid: 085d9b72bb14d4e4a8b416073ec2302d,
-    type: 3}
-  downSprite: {fileID: -896013883204862218, guid: 085d9b72bb14d4e4a8b416073ec2302d,
-    type: 3}
-  chargeTP: 5
+  sprites:
+  - {fileID: -896013883204862218, guid: 085d9b72bb14d4e4a8b416073ec2302d, type: 3}
+  - {fileID: -1371730293959630443, guid: 085d9b72bb14d4e4a8b416073ec2302d, type: 3}
+  - {fileID: 7259597191629325265, guid: 085d9b72bb14d4e4a8b416073ec2302d, type: 3}
+  - {fileID: 8437762322901192239, guid: 085d9b72bb14d4e4a8b416073ec2302d, type: 3}
 --- !u!1 &1392254188
 GameObject:
   m_ObjectHideFlags: 0
