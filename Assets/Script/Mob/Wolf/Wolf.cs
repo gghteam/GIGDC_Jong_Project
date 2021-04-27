@@ -16,6 +16,7 @@ public class Wolf : MonoBehaviour
     public bool canMove;
     public bool inWall;
     public int dir = 1;
+    public float jumpPower;
     public Rigidbody2D rigidbady;
 
     //RaycastHit2D hit;
@@ -52,8 +53,8 @@ public class Wolf : MonoBehaviour
 
         //transform.DOJump(new Vector3(transform.position.x + 20 * dir, 2, 0), 2, 1, 1f); // 이건 점프하는거 
         //transform.DOBlendableLocalMoveBy(new Vector3(3 * dir, 0, 0), 1f);
-        rigidbady.AddForce(Vector2.right*dir*15,ForceMode2D.Impulse);
-        rigidbady.AddForce(Vector2.up * 15, ForceMode2D.Impulse);
+        rigidbady.AddForce(Vector2.right*dir* jumpPower, ForceMode2D.Impulse);
+        rigidbady.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse);
         Debug.Log("공격");
         yield return new WaitForSeconds(1f);
         canMove = true;

@@ -8,10 +8,8 @@ public class Bolt : MonoBehaviour
     private float startX;
     private float startY;
     public float speed;
-    public float maxX;  //오른쪽으로 해당 값만큼 이동가능
-    public float minX;  //왼쪽으로 해당 값 만큼 이동 가능
-    public float maxY;
-    public float minY;
+    public float max;  //오른쪽으로 해당 값만큼 이동가능
+    public float min;  //왼쪽으로 해당 값 만큼 이동 가능
     public bool isX = true;
     // Start is called before the first frame update
     void Start()
@@ -37,11 +35,11 @@ public class Bolt : MonoBehaviour
     void MoveX()
     {
         transform.Translate(Vector2.right* dir * speed*Time.deltaTime);
-        if (transform.position.x > startX+maxX)     //오른쪽
+        if (transform.position.x > startX+max)     //오른쪽
         {
             dir = -1;
         }
-        else if(transform.position.x < startX-minX)     //왼쪽
+        else if(transform.position.x < startX-min)     //왼쪽
         {
             dir = 1;
         }
@@ -49,11 +47,11 @@ public class Bolt : MonoBehaviour
     void MoveY()
     {
         transform.Translate(Vector2.up * dir* speed * Time.deltaTime);
-        if (transform.position.y > startY + maxY)     //위
+        if (transform.position.y > startY + max)     //위
         {
             dir = -1;
         }
-        else if (transform.position.y < startY - minY)     //아래
+        else if (transform.position.y < startY - min)     //아래
         {
             dir = 1;
         }
