@@ -3780,12 +3780,12 @@ GameObject:
   - component: {fileID: 678101815}
   - component: {fileID: 678101814}
   m_Layer: 10
-  m_Name: SmallRobot
+  m_Name: Robot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &678101814
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3827,7 +3827,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
-  m_GravityScale: 1
+  m_GravityScale: 10
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -3845,8 +3845,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b68c507552cf2649af9156487784e03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnerObj: {fileID: 1714723846}
   speed: 5
-  lifeTime: 10
+  lifeTime: 3
 --- !u!212 &678101817
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3905,12 +3906,21 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 678101813}
+<<<<<<< HEAD
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -13.77, y: 1.75, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 53379547}
   m_RootOrder: 5
+=======
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
+  m_LocalPosition: {x: -0.077, y: -0.036, z: 0}
+  m_LocalScale: {x: -0.57142854, y: 0.57142854, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1714723847}
+  m_RootOrder: 1
+>>>>>>> 638f984e9df822fc0fdcb83619c877ff91ceaa7c
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &693989502
 GameObject:
@@ -9043,9 +9053,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1714723847}
   - component: {fileID: 1714723849}
+  - component: {fileID: 1714723850}
   - component: {fileID: 1714723848}
   m_Layer: 10
-  m_Name: Robot
+  m_Name: RobotSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9063,6 +9074,7 @@ Transform:
   m_LocalScale: {x: 7, y: 7, z: 1}
   m_Children:
   - {fileID: 2103457742}
+  - {fileID: 678101818}
   m_Father: {fileID: 53379547}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -9143,6 +9155,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1714723850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714723846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b523be19598000446bc7ceceda811e78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canSpawn: 0
+  spawnTime: 3
+  robotObj: {fileID: 678101813}
 --- !u!1 &1716277724
 GameObject:
   m_ObjectHideFlags: 0
@@ -10796,7 +10823,7 @@ GameObject:
   - component: {fileID: 2103457742}
   - component: {fileID: 2103457743}
   m_Layer: 10
-  m_Name: Robot_Trigger
+  m_Name: RobotSpawner_Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11202,6 +11229,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Wolf
+      objectReference: {fileID: 0}
+    - target: {fileID: 7939531173345416338, guid: 52120e0f6ac8b4446904b6d873ef7b55,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7939531173345416340, guid: 52120e0f6ac8b4446904b6d873ef7b55,
         type: 3}
