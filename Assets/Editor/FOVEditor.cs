@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(Wolf))]
+[CustomEditor(typeof(EnemyFOV))]
 
 public class FOVEditor : Editor
 {
 	private void OnSceneGUI()
 	{
-		Wolf fov = (Wolf)target;
+		EnemyFOV fov = (EnemyFOV)target;
 		Vector2 fromAngle = fov.CirclePoint(-fov.viewAngle * 0.5f);
 		Handles.color = Color.white;
 		Handles.DrawWireDisc(fov.transform.position, Vector3.forward, fov.viewRange);

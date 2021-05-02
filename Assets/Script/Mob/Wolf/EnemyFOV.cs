@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wolf : MonoBehaviour
+public class EnemyFOV : MonoBehaviour
 {
     public float viewRange = 10f;
     [Range(0, 360)]
     public float viewAngle = 30f;
     public LayerMask layerMask;
     private int playerLayer;
+    private EnemyMove enemyMove;
     private void Awake()
 	{
+        enemyMove = GetComponent<EnemyMove>();
         playerLayer = LayerMask.NameToLayer("Player");
 	}
 	void Start()
@@ -21,7 +23,7 @@ public class Wolf : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        IsViewPlayer();
     }
     public Vector2 CirclePoint(float angle)
     {
@@ -32,28 +34,29 @@ public class Wolf : MonoBehaviour
         bool isView = false;
         Vector2 dir = GameManager.Player.position - transform.position;
 
-        RaycastHit2D hit2D = Physics2D.Raycast(transform.position, dir.normalized, viewRange, layerMask);
+        RaycastHit2D hit2D = Physics2D.Raycast(transform.position, dir.normalized, viewRange,layerMask);
         if (hit2D.collider != null)
         {
             isView = (hit2D.collider.gameObject.CompareTag("Player"));
+            
         }
 
         return isView;
     }
-    //public bool IsTracePlayer()
-    //{
-    //    bool isTrace = false;
-    //    Collider2D col = Physics2D.OverlapCircle(transform.position, viewRange, 1 << playerLayer);
-    //    if (col != null)
-    //    { //서클안에 충돌체가 있다면 거리 측정
-    //        Vector2 dir = GameManager.Player.position - transform.position; //z를 무시하고 받기 위해 Vector2로 형변환 한다.
-    //        //Vector3 right = enemyMove.facingRight ? transform.right : transform.right * -1;
+	public bool IsTracePlayer()
+	{
+		bool isTrace = false;
+		Collider2D col = Physics2D.OverlapCircle(transform.position, viewRange, 1 << playerLayer);
+		if (col != null)
+		{ //서클안에 충돌체가 있다면 거리 측정
+			Vector2 dir = GameManager.Player.position - transform.position; //z를 무시하고 받기 위해 Vector2로 형변환 한다.
+            Vector2 right = enemyMove.facingright ? transform.right : transform.right * -1;
 
-    //        if (Vector2.Angle(right, dir) < viewAngle * 0.5f)
-    //        {
-    //            isTrace = true;
-    //        }
-    //    }
-    //    return isTrace;
-    //}
+			if (Vector2.Angle(right, dir) < viewAngle * 0.5f)
+			{
+				isTrace = true;
+			}
+		}
+		return isTrace;
+	}
 }
