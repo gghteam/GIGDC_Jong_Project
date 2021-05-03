@@ -68,9 +68,7 @@ public class PlayerMove : MonoBehaviour
     IEnumerator JumpKeyHolding()
     {
         //키가 계속 눌리고 있거나, 점프키다운시간이 다되었거나 점프높이를 초과했다면 그만
-        while (playerInput.jumpHolding
-                && stayJumpKey > 0
-                && transform.position.y <= startYPos + maxJumpHeight)
+        while (playerInput.jumpHolding && stayJumpKey > 0 && transform.position.y <= startYPos + maxJumpHeight)
         {
             stayJumpKey -= Time.deltaTime;
             rigid.velocity = new Vector2(rigid.velocity.x, jumpSpeed);
