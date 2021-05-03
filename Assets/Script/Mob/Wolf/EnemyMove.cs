@@ -8,7 +8,7 @@ public class EnemyMove : MonoBehaviour
     private Rigidbody2D rigid;
 
     public bool isMoving = true;
-    public float patrolDistacne = 5f;
+    public float patrolDistance = 5f;
     public float movingSpeed = 2f;
     public float stayDelay = 3f;
 
@@ -22,8 +22,10 @@ public class EnemyMove : MonoBehaviour
     private void Awake()
 	{
         rigid = GetComponent<Rigidbody2D>();
+        patrolPoint[0] = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         for (int i = 0; i < patrolPoint.Length; i++)
         {
+            patrolPoint[i] = new Vector3(patrolPoint[0].x+ patrolDistance*(i), patrolPoint[0].y, patrolPoint[0].z);
             patrolList.Add(patrolPoint[i]);
         }
         destination = patrolPoint[0];
@@ -46,7 +48,7 @@ public class EnemyMove : MonoBehaviour
         }
         rigid.velocity = (destination - transform.position).normalized * GetSpeed();
 
-        if ((facingright && rigid.velocity.x < 0) || (!facingright && rigid.velocity.x > 0))
+        if ((!facingright && rigid.velocity.x < 0) || (facingright && rigid.velocity.x > 0))
         {
             Flip();
         }

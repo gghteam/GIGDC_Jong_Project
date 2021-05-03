@@ -24,6 +24,7 @@ public class EnemyFOV : MonoBehaviour
     void Update()
     {
         IsViewPlayer();
+        IsTracePlayer();
     }
     public Vector2 CirclePoint(float angle)
     {
@@ -34,11 +35,11 @@ public class EnemyFOV : MonoBehaviour
         bool isView = false;
         Vector2 dir = GameManager.Player.position - transform.position;
 
-        RaycastHit2D hit2D = Physics2D.Raycast(transform.position, dir.normalized, viewRange,layerMask);
-        if (hit2D.collider != null)
+        RaycastHit2D hit2D = Physics2D.Raycast(transform.position,new Vector2(-1*transform.localScale.x,0), viewRange,layerMask);
+        if (hit2D.collider != null&&GameManager.GetScale() != 0)
         {
             isView = (hit2D.collider.gameObject.CompareTag("Player"));
-            
+            Debug.Log(hit2D.collider.gameObject.name);
         }
 
         return isView;
@@ -49,12 +50,13 @@ public class EnemyFOV : MonoBehaviour
 		Collider2D col = Physics2D.OverlapCircle(transform.position, viewRange, 1 << playerLayer);
 		if (col != null)
 		{ //서클안에 충돌체가 있다면 거리 측정
+            
 			Vector2 dir = GameManager.Player.position - transform.position; //z를 무시하고 받기 위해 Vector2로 형변환 한다.
-            Vector2 right = enemyMove.facingright ? transform.right : transform.right * -1;
-
-			if (Vector2.Angle(right, dir) < viewAngle * 0.5f)
+            Vector2 right = enemyMove.facingright ? transform.right *-1 : transform.right;
+			if (Vector2.Angle(right, dir) < viewAngle * 0.5f&&GameManager.GetScale() != 0)
 			{
 				isTrace = true;
+                Debug.Log("각도 안에 플레이어 들어옴");
 			}
 		}
 		return isTrace;

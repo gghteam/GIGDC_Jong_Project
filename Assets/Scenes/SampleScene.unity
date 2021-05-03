@@ -1107,7 +1107,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 204857852}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.06, y: 5.97, z: 0}
+  m_LocalPosition: {x: 3.33, y: 6.41, z: 0}
   m_LocalScale: {x: 5.96114, y: 5.96114, z: 0}
   m_Children:
   - {fileID: 342743418}
@@ -1129,7 +1129,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 100
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 1
   m_SleepingMode: 1
@@ -2480,7 +2480,7 @@ GameObject:
   - component: {fileID: 375869797}
   - component: {fileID: 375869799}
   - component: {fileID: 375869798}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: M_002_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2495,8 +2495,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 375869793}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 2.94, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 1}
+  m_LocalPosition: {x: -7, y: 2.086761, z: 0}
+  m_LocalScale: {x: 7, y: 7, z: 1}
   m_Children: []
   m_Father: {fileID: 53379547}
   m_RootOrder: 5
@@ -2513,8 +2513,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8ff2fe63f9658747a5268e5b8ef4808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRange: 5.64
-  viewAngle: 54
+  viewRange: 10.99
+  viewAngle: 78
   layerMask:
     serializedVersion: 2
     m_Bits: 768
@@ -2583,13 +2583,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   facingright: 1
   isMoving: 1
-  patrolDistacne: 5
-  movingSpeed: 20
-  stayDelay: 3
+  patrolDistance: 5
+  movingSpeed: 3
+  stayDelay: 2
   patrolPoint:
   - {x: 0, y: 0, z: 0}
-  - {x: -5, y: 0, z: 0}
-  - {x: -10, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
 --- !u!61 &375869798
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2628,15 +2628,15 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
+  m_Mass: 10
+  m_LinearDrag: 10
   m_AngularDrag: 0.05
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!1 &382329484
 GameObject:
   m_ObjectHideFlags: 0
