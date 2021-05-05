@@ -15,7 +15,6 @@ public class PlayerAnimation : MonoBehaviour
         playerMove = GetComponent<PlayerMove>();
     }
 
-
     void Update()
     {
         //애니메이터 값 설정

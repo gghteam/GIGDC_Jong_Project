@@ -12,6 +12,7 @@ public class PlayerInput : MonoBehaviour
 
     public float yMove { get; private set; }
     public float xMove { get; private set; }
+    public bool xMoving { get; private set; }
     public bool timeSleepKey { get; private set; }
     public bool chargeKey { get; private set; }
     public bool jump { get; private set; }
@@ -20,6 +21,7 @@ public class PlayerInput : MonoBehaviour
     {
         yMove = Input.GetAxisRaw(yAxisName);
         xMove = Input.GetAxisRaw(xAxisName);
+        xMoving = Input.GetButton(xAxisName);
         timeSleepKey = Input.GetButtonDown(timeSleepKeyName);
         chargeKey = Input.GetButtonDown(chargeKeyName);
         jump = Input.GetButtonDown(jumpKeyName);

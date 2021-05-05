@@ -960,6 +960,8 @@ GameObject:
   - component: {fileID: 204857860}
   - component: {fileID: 204857859}
   - component: {fileID: 204857858}
+  - component: {fileID: 204857862}
+  - component: {fileID: 204857863}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -1049,7 +1051,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 2
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 4e821973f7f6e4043ac37aa6fa9a9fb4, type: 2}
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -1129,7 +1131,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   xMove: 0
   facingRight: 1
-  moveSpeed: 8
+  moveSpeed: 12
+  runSpeed: 18
+  walkToRun: 1
+  dontMove: 0
   isGround: 0
   maxJumpHeight: 5
   whatIsGround:
@@ -1137,7 +1142,7 @@ MonoBehaviour:
     m_Bits: 256
   groundChecker: {fileID: 342743418}
   maxJumpCount: 2
-  jumpSpeed: 10
+  jumpSpeed: 20
   jumpTime: 0.5
 --- !u!114 &204857860
 MonoBehaviour:
@@ -1168,6 +1173,34 @@ MonoBehaviour:
   timeSleepKeyName: TimeSleep
   chargeKeyName: Charge
   jumpKeyName: Jump
+--- !u!114 &204857862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 204857852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96655b52640ee5c4db22dbcd877b80f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 100
+  exp: 0
+  atk: 10
+  def: 5
+--- !u!114 &204857863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 204857852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 409eb1c033d1fbb4f8f04180b5282dab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &230146402
 GameObject:
   m_ObjectHideFlags: 0
@@ -2012,8 +2045,8 @@ GameObject:
   - component: {fileID: 375869799}
   - component: {fileID: 375869798}
   m_Layer: 11
-  m_Name: M_002_0
-  m_TagString: Untagged
+  m_Name: Wolf
+  m_TagString: Mob
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2028,7 +2061,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7, y: 2.086761, z: 0}
   m_LocalScale: {x: 7, y: 7, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1950903180}
   m_Father: {fileID: 53379547}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2114,7 +2148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   facingright: 1
   isMoving: 1
-  patrolDistance: 5
+  patrolDistance: 30
   movingSpeed: 3
   stayDelay: 2
   patrolPoint:
@@ -2565,6 +2599,31 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 503334488}
   m_CullTransparentMesh: 0
+--- !u!1 &517564414 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2966408772722310480, guid: 8592e09e8449d2c40a6d7cf315e52b14,
+    type: 3}
+  m_PrefabInstance: {fileID: 2966408772361743011}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &517564420
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517564414}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 052e6769a5631d045a30dcc7e1b4d4c3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -8480,6 +8539,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1940856915}
   m_CullTransparentMesh: 0
+--- !u!1 &1950903179
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1950903180}
+  - component: {fileID: 1950903181}
+  m_Layer: 0
+  m_Name: WolfTrigger
+  m_TagString: Mob
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1950903180
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1950903179}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 375869794}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1950903181
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1950903179}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0051552057, y: -0.07217352}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.5463376, y: 0.3916799}
+  m_EdgeRadius: 0
 --- !u!1 &2003417253
 GameObject:
   m_ObjectHideFlags: 0
@@ -9210,7 +9326,7 @@ PrefabInstance:
     - target: {fileID: 2966408772722310480, guid: 8592e09e8449d2c40a6d7cf315e52b14,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2966408772722310484, guid: 8592e09e8449d2c40a6d7cf315e52b14,
         type: 3}

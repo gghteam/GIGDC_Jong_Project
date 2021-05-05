@@ -8,10 +8,14 @@ public class PlayerMove : MonoBehaviour
     public float xMove;
     private PlayerInput playerInput;
     private PlayerTP playerTP;
+    private PlayerHit playerhit;
 
     [Header("이동관련")]
     public bool facingRight = true;
     public float moveSpeed = 8f;
+    public float runSpeed = 20f;
+    public float walkToRun = 1f;
+    public bool dontMove = false;
 
     [Header("점프관련")]
     public bool isGround = false;
@@ -25,23 +29,36 @@ public class PlayerMove : MonoBehaviour
 
     private int jumpCount;
     private float stayJumpKey = 0;
+    private float stayMoveKey = 0;
     private float startYPos = 0; //점프를 시작했을 때 y포지션
+
+    private float saveMoveSpeed;
 
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
         playerTP = GetComponent<PlayerTP>();
+        playerhit = GetComponent<PlayerHit>();
+        saveMoveSpeed = moveSpeed;
     }
 
     void Update()
     {
+        if (dontMove)
+            return;
+
         if (playerTP.state == TPState.CHARGING)
         {
             xMove = 0;
             return; //차징중일때는 움직일 수 없고 오로지 차저만을 작동시킨다.
         }
+
         xMove = playerInput.xMove;
+        if(playerInput.xMove != 0)
+        { // 움직이고 있을 때
+            MoveStart();
+        }
 
         if ((facingRight && xMove < 0) || (!facingRight && xMove > 0))
         {
@@ -53,7 +70,27 @@ public class PlayerMove : MonoBehaviour
             JumpStart();
         }
     }
-
+    private void MoveStart()
+    {
+        if(playerInput.xMove != 0)
+        {
+            stayMoveKey = walkToRun; // walkToRun만큼 작동
+            StartCoroutine(MoveKeyHolding());
+        }
+    }
+    IEnumerator MoveKeyHolding()
+    {
+        while(playerInput.xMove != 0)
+        {
+            stayMoveKey -= Time.deltaTime;
+            if(stayMoveKey < 0 && isGround)
+            { // walkToRun의 시간이 끝나면 달리기로 변환
+                moveSpeed = runSpeed;
+            }
+            yield return null; // 프레임 마다 실행
+        }
+        moveSpeed = saveMoveSpeed;
+    }
     private void JumpStart()
     {
         if (isGround || jumpCount > 0)
@@ -80,9 +117,9 @@ public class PlayerMove : MonoBehaviour
 
     void FixedUpdate()
     {
-
+        if (dontMove)
+            return;
         rigid.velocity = new Vector3(xMove * moveSpeed, rigid.velocity.y);
-
 
         isGround = Physics2D.OverlapCircle(groundChecker.position, 0.1f, whatIsGround);
 
@@ -95,7 +132,7 @@ public class PlayerMove : MonoBehaviour
     private void Flip()
     {
         Vector3 scale = transform.localScale;
-        scale.x *= -1;
+        scale.x *= -1; // -1을 곱해줘서 반전해주기
         facingRight = !facingRight;
         transform.localScale = scale;
     }
