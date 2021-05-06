@@ -8,9 +8,10 @@ public class PlayerHit : MonoBehaviour, IDamageable
     private PlayerMove playerMove;
     private Rigidbody2D rigid;
     private PlayerRenderer pr;
+    private PlayerDead dead;
     private float dir;
     private int reqDamage;      // 방어력까지 계산한 데미지
-    public bool ishit = false;
+    public bool isHit = false;
 
     [Header("무적관련변수들")]
     [SerializeField]
@@ -27,7 +28,8 @@ public class PlayerHit : MonoBehaviour, IDamageable
         playerStat.hp -= reqDamage;
         if(playerStat.hp <= 0)
         {
-            playerStat.hp = 0;
+            dead.isDead = true;
+            dead.DeadScene();
             //사망
         }
         else
@@ -50,15 +52,16 @@ public class PlayerHit : MonoBehaviour, IDamageable
         rigid = GetComponent<Rigidbody2D>();
         playerMove = GetComponent<PlayerMove>();
         pr = GetComponent<PlayerRenderer>();
+        dead = GetComponent<PlayerDead>();
         dir = 1;
         evasion = false;
     }
     private void Update()
     {
-        if (playerMove.dontMove && playerMove.isGround && ishit &&rigid.velocity.y <= 0) // 피격 당한뒤 땅에 닿았을 경우
+        if (playerMove.dontMove && playerMove.isGround && isHit &&rigid.velocity.y <= 0) // 피격 당한뒤 땅에 닿았을 경우
         {
 			StartCoroutine(delay());
-            ishit = false;
+            isHit = false;
             //playerMove.dontMove = false;
             rigid.velocity = new Vector2(5 * dir, 0);
         }
@@ -77,7 +80,7 @@ public class PlayerHit : MonoBehaviour, IDamageable
             {
                 dir = 1;
             }
-            ishit = true;
+            isHit = true;
             playerMove.dontMove = true;
             OnDamage(10);
         }
