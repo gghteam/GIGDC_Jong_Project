@@ -6,10 +6,15 @@ public class PlayerHit : MonoBehaviour, IDamageable
 {
     private Stat playerStat;
     private PlayerMove playerMove;
-    private int reqDamage;
     private Rigidbody2D rigid;
+    private PlayerRenderer pr;
     private float dir;
-    public void OnDamage(int damage)
+    private int reqDamage;
+    private bool evasion;
+    private bool evasionTime;
+    public bool ishit = false;
+    float test;
+    public void OnDamage(int damage) // 피격 당하면 함수 실행
     {
         reqDamage = damage - playerStat.def;
         if(reqDamage <= 0)
@@ -25,9 +30,7 @@ public class PlayerHit : MonoBehaviour, IDamageable
         else
         {
             //피격
-            playerMove.ishit = true;
-            playerMove.dontMove = true;
-            if(transform.localScale.x == Mathf.Abs(transform.localScale.x) && dir == 1 || transform.localScale.x != Mathf.Abs(transform.localScale.x) && dir == -1)
+            if (transform.localScale.x == Mathf.Abs(transform.localScale.x) && dir == 1 || transform.localScale.x != Mathf.Abs(transform.localScale.x) && dir == -1) // 맞는 방향에 따라서 바라보는 곳이 달리짐다
             {
                 playerMove.facingRight = !playerMove.facingRight;
             }
@@ -37,27 +40,32 @@ public class PlayerHit : MonoBehaviour, IDamageable
             Debug.Log("피격");
         }
     }
+
     private void Awake()
     {
         playerStat = GetComponent<Stat>();
         rigid = GetComponent<Rigidbody2D>();
         playerMove = GetComponent<PlayerMove>();
+        pr = GetComponent<PlayerRenderer>();
         dir = 1;
+        test = 0;
+        evasion = false;
     }
     private void Update()
     {
-        if (playerMove.dontMove && playerMove.isGround && rigid.velocity.y <= 0)
+        if (playerMove.dontMove && playerMove.isGround && ishit &&rigid.velocity.y <= 0) // 피격 당한뒤 땅에 닿았을 경우
         {
 			StartCoroutine(delay());
-            playerMove.ishit = false;
+            ishit = false;
             //playerMove.dontMove = false;
             rigid.velocity = new Vector2(5 * dir, 0);
-            
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Mob"))
+        if (playerMove.dontMove || evasion) // 이미 맞은 상태라면 리턴 || 무적시간이라면 리턴
+            return;
+        if (collision.gameObject.CompareTag("Mob")) // 좌표 값에 따라서 dir 값이 변함
         {
             if (transform.position.x < collision.gameObject.transform.parent.position.x)
             {
@@ -67,13 +75,19 @@ public class PlayerHit : MonoBehaviour, IDamageable
             {
                 dir = 1;
             }
+            ishit = true;
+            playerMove.dontMove = true;
             OnDamage(10);
         }
     }
-
-    IEnumerator delay()
+    IEnumerator delay() // 뒤로 구르는 딜레이 넣기
     {
         yield return new WaitForSeconds(0.3f);
         playerMove.dontMove = false;
+        evasion = true;
+    }
+    IEnumerator CoEvasion(float time)
+    {
+        yield return null; // 이부분은 코딩중.........
     }
 }

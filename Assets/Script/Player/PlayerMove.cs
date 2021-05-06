@@ -8,7 +8,6 @@ public class PlayerMove : MonoBehaviour
     public float xMove;
     private PlayerInput playerInput;
     private PlayerTP playerTP;
-    private PlayerHit playerhit;
 
     [Header("이동관련")]
     public bool facingRight = true;
@@ -39,7 +38,6 @@ public class PlayerMove : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
         playerTP = GetComponent<PlayerTP>();
-        playerhit = GetComponent<PlayerHit>();
         saveMoveSpeed = moveSpeed;
     }
 
