@@ -43,7 +43,7 @@ public class EnemyFOV : MonoBehaviour
         if (hit2D.collider != null)
         {
             isView = (hit2D.collider.gameObject.CompareTag("Player"));
-            Debug.Log(isView);
+            //Debug.Log(isView);
         }
 
         return isView;
@@ -60,7 +60,7 @@ public class EnemyFOV : MonoBehaviour
 			if (Vector2.Angle(right, dir) < viewAngle * 0.5f&&GameManager.GetScale() != 0)
 			{
 				isTrace = true;
-                Debug.Log("각도 안에 플레이어 들어옴");
+                //Debug.Log("각도 안에 플레이어 들어옴");
 			}
 		}
 		return isTrace;

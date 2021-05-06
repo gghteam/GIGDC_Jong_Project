@@ -26,21 +26,15 @@ public class PlayerHit : MonoBehaviour, IDamageable
         {
             //피격
             playerMove.dontMove = true;
-            rigid.AddForce(new Vector2(250 * dir, 300));
-            //rigid.AddForce(Vector2.right * 10, ForceMode2D.Impulse);
-            //rigid.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+            if(transform.localScale.x == Mathf.Abs(transform.localScale.x) && dir == 1 || transform.localScale.x != Mathf.Abs(transform.localScale.x) && dir == -1)
+            {
+                playerMove.facingRight = !playerMove.facingRight;
+            }
+
+            transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x) * -dir, transform.localScale.y);
+            rigid.velocity = new Vector2(8 * dir, 7);
             Debug.Log("피격");
         }
-    }
-    IEnumerator isGround()
-    {
-        while(true)
-        {
-            if (playerMove.isGround)
-                break;
-            yield return null;
-        }
-
     }
     private void Awake()
     {
@@ -51,19 +45,20 @@ public class PlayerHit : MonoBehaviour, IDamageable
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (playerMove.dontMove && playerMove.isGround && rigid.velocity.y <= 0)
         {
-            Debug.Log(playerStat.hp);
-            OnDamage(10);
+            //StartCoroutine(delay());
+
+            playerMove.dontMove = false;
+            rigid.velocity = new Vector2(8 * dir, 0);
+            
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("asdfasdfsadf");
-        Debug.Log(collision.gameObject.transform.parent.transform.position.x);
         if (collision.gameObject.CompareTag("Mob"))
         {
-            if (transform.position.x < collision.gameObject.transform.parent.transform.position.x)
+            if (transform.position.x < collision.gameObject.transform.parent.position.x)
             {
                 dir = -1;
             }
@@ -73,5 +68,11 @@ public class PlayerHit : MonoBehaviour, IDamageable
             }
             OnDamage(10);
         }
+    }
+
+    IEnumerator delay()
+    {
+        yield return new WaitForSeconds(0.5f);
+        playerMove.dontMove = false;
     }
 }

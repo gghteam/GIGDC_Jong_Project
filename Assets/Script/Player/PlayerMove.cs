@@ -26,7 +26,6 @@ public class PlayerMove : MonoBehaviour
     public float jumpSpeed = 5f;
     public float jumpTime = 0.5f; //.5초동안 누르고 있을 수 있다.
 
-
     private int jumpCount;
     private float stayJumpKey = 0;
     private float stayMoveKey = 0;
@@ -117,11 +116,12 @@ public class PlayerMove : MonoBehaviour
 
     void FixedUpdate()
     {
+        isGround = Physics2D.OverlapCircle(groundChecker.position, 0.1f, whatIsGround);
+        Debug.Log(dontMove);
         if (dontMove)
             return;
-        rigid.velocity = new Vector3(xMove * moveSpeed, rigid.velocity.y);
 
-        isGround = Physics2D.OverlapCircle(groundChecker.position, 0.1f, whatIsGround);
+        rigid.velocity = new Vector2(xMove * moveSpeed, rigid.velocity.y);
 
         if (isGround && rigid.velocity.y < 0)
         { //땅바닥에 착지했다면 점프카운트 리셋
@@ -129,7 +129,7 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
-    private void Flip()
+    public void Flip()
     {
         Vector3 scale = transform.localScale;
         scale.x *= -1; // -1을 곱해줘서 반전해주기
