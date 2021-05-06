@@ -1135,7 +1135,6 @@ MonoBehaviour:
   runSpeed: 20
   walkToRun: 1
   dontMove: 0
-  ishit: 0
   isGround: 0
   maxJumpHeight: 5
   whatIsGround:
@@ -1186,7 +1185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96655b52640ee5c4db22dbcd877b80f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 100
+  hp: 1000
   exp: 0
   atk: 10
   def: 5
@@ -1202,6 +1201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 409eb1c033d1fbb4f8f04180b5282dab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ishit: 0
 --- !u!1 &230146402
 GameObject:
   m_ObjectHideFlags: 0
