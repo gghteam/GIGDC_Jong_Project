@@ -16,6 +16,7 @@ public class PlayerMove : MonoBehaviour
     public float runSpeed = 20f;
     public float walkToRun = 1f;
     public bool dontMove = false;
+    public bool ishit = false;
 
     [Header("점프관련")]
     public bool isGround = false;

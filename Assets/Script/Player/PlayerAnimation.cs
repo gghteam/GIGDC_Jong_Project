@@ -21,6 +21,8 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetFloat("moveSpeed", Mathf.Abs(rigid.velocity.x));
         animator.SetBool("isGround", playerMove.isGround);
         animator.SetFloat("ySpeed", rigid.velocity.y);
-        animator.SetBool("isHit", playerMove.dontMove);
+        animator.SetBool("isHit", playerMove.ishit);
+        //animator.SetBool("isHit", playerMove.dontMove);
+
     }
 }

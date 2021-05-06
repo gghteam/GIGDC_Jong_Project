@@ -25,6 +25,7 @@ public class PlayerHit : MonoBehaviour, IDamageable
         else
         {
             //피격
+            playerMove.ishit = true;
             playerMove.dontMove = true;
             if(transform.localScale.x == Mathf.Abs(transform.localScale.x) && dir == 1 || transform.localScale.x != Mathf.Abs(transform.localScale.x) && dir == -1)
             {
@@ -47,10 +48,10 @@ public class PlayerHit : MonoBehaviour, IDamageable
     {
         if (playerMove.dontMove && playerMove.isGround && rigid.velocity.y <= 0)
         {
-            //StartCoroutine(delay());
-
-            playerMove.dontMove = false;
-            rigid.velocity = new Vector2(8 * dir, 0);
+			StartCoroutine(delay());
+            playerMove.ishit = false;
+            //playerMove.dontMove = false;
+            rigid.velocity = new Vector2(5 * dir, 0);
             
         }
     }
@@ -72,7 +73,7 @@ public class PlayerHit : MonoBehaviour, IDamageable
 
     IEnumerator delay()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         playerMove.dontMove = false;
     }
 }
