@@ -26,6 +26,11 @@ public class EnemyFOV : MonoBehaviour
         if (IsTracePlayer())
         {
             IsViewPlayer();
+            if (IsCanAttack())
+            {
+                enemyMove.canAttack = true;
+            }
+           
         }
     }
     public Vector2 CirclePoint(float angle)
@@ -43,10 +48,23 @@ public class EnemyFOV : MonoBehaviour
         if (hit2D.collider != null)
         {
             isView = (hit2D.collider.gameObject.CompareTag("Player"));
-            //Debug.Log(isView);
         }
 
         return isView;
+    }
+    public bool IsCanAttack()
+    {
+        bool canAttack = false;
+        Vector2 dir = GameManager.Player.position - transform.position;
+
+        RaycastHit2D hit2D = Physics2D.Raycast(transform.position, dir.normalized, viewRange*0.7f, layerMask);
+        Debug.DrawRay(transform.position, dir.normalized * viewRange*0.7f, Color.green, 0.1f);
+        if (hit2D.collider != null)
+        {
+            canAttack = (hit2D.collider.gameObject.CompareTag("Player"));
+        }
+
+        return canAttack;
     }
     public bool IsTracePlayer()
 	{

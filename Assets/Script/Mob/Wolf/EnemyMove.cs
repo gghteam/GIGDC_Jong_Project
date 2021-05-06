@@ -7,6 +7,7 @@ public class EnemyMove : MonoBehaviour
     public bool facingright = true;
     private Rigidbody2D rigid;
 
+    public bool canAttack = false;
     public bool isMoving = true;
     public float patrolDistance = 5f;
     public float movingSpeed = 2f;
@@ -16,6 +17,8 @@ public class EnemyMove : MonoBehaviour
     private List<Vector2> patrolList = new List<Vector2>();
     private int patrolIndex = 0;
     private Vector3 destination;
+    
+
 
     private bool isStop = false;
     // Start is called before the first frame update

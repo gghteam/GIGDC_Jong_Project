@@ -1136,6 +1136,7 @@ MonoBehaviour:
   runSpeed: 20
   walkToRun: 1
   dontMove: 0
+  ishit: 0
   isGround: 0
   maxJumpHeight: 5
   whatIsGround:
@@ -2148,9 +2149,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   facingright: 1
+  canAttack: 0
   isMoving: 1
   patrolDistance: 30
-  movingSpeed: 0
+  movingSpeed: 10
   stayDelay: 2
   patrolPoint:
   - {x: 0, y: 0, z: 0}
@@ -3260,6 +3262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   facingright: 1
+  canAttack: 0
   isMoving: 1
   patrolDistance: 30
   movingSpeed: 0
