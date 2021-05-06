@@ -9,11 +9,14 @@ public class PlayerHit : MonoBehaviour, IDamageable
     private Rigidbody2D rigid;
     private PlayerRenderer pr;
     private float dir;
-    private int reqDamage;
-    private bool evasion;
-    private bool evasionTime;
+    private int reqDamage;      // 방어력까지 계산한 데미지
     public bool ishit = false;
-    float test;
+
+    [Header("무적관련변수들")]
+    [SerializeField]
+    private bool evasion;       // true일때 무적
+    public float evasionTime;   // 무적 시간
+
     public void OnDamage(int damage) // 피격 당하면 함수 실행
     {
         reqDamage = damage - playerStat.def;
@@ -48,7 +51,6 @@ public class PlayerHit : MonoBehaviour, IDamageable
         playerMove = GetComponent<PlayerMove>();
         pr = GetComponent<PlayerRenderer>();
         dir = 1;
-        test = 0;
         evasion = false;
     }
     private void Update()
@@ -82,12 +84,32 @@ public class PlayerHit : MonoBehaviour, IDamageable
     }
     IEnumerator delay() // 뒤로 구르는 딜레이 넣기
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.3f); // 0.3초 동안 딜레이
         playerMove.dontMove = false;
         evasion = true;
+        StartCoroutine(CoEvasion(evasionTime));
     }
-    IEnumerator CoEvasion(float time)
+    IEnumerator CoEvasion(float time) // 0.3초 간격으로 깜박깜박거리는 코루틴
     {
-        yield return null; // 이부분은 코딩중.........
+        float delta = 0f;
+        while(true)
+        {
+            delta += Time.deltaTime;
+            if(delta > 0.3f)
+            {
+                pr.SetAlpha(0.5f);
+                yield return new WaitForSeconds(0.2f);
+                pr.SetAlpha(1f);
+                time -= delta;
+                delta = 0;
+            }
+            
+            if(time <= 0)
+            {
+                break;
+            }
+            yield return null;
+        }
+        evasion = false;
     }
 }

@@ -12,6 +12,7 @@ public class PlayerInput : MonoBehaviour
 
     public float yMove { get; private set; }
     public float xMove { get; private set; }
+    public float hp { get; private set; }
     public bool xMoving { get; private set; }
     public bool timeSleepKey { get; private set; }
     public bool chargeKey { get; private set; }

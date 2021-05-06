@@ -8,6 +8,7 @@ public class PlayerAnimation : MonoBehaviour
     private Rigidbody2D rigid;
     private PlayerMove playerMove;
     private PlayerHit playerHit;
+    private Stat playerStat;
 
     void Awake()
     {
@@ -15,6 +16,7 @@ public class PlayerAnimation : MonoBehaviour
         animator = GetComponent<Animator>();
         playerMove = GetComponent<PlayerMove>();
         playerHit = GetComponent<PlayerHit>();
+        playerStat = GetComponent<Stat>();
     }
 
     void Update()
@@ -24,7 +26,6 @@ public class PlayerAnimation : MonoBehaviour
         animator.SetBool("isGround", playerMove.isGround);
         animator.SetFloat("ySpeed", rigid.velocity.y);
         animator.SetBool("isHit", playerHit.ishit);
-        //animator.SetBool("isHit", playerMove.dontMove);
-
+        animator.SetFloat("hp", playerStat.hp);
     }
 }
