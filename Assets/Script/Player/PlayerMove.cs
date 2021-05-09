@@ -18,9 +18,13 @@ public class PlayerMove : MonoBehaviour
 
     [Header("점프관련")]
     public bool isGround = false;
+    public bool isWall_L = false;
+    public bool isWall_R = false;
     public float maxJumpHeight = 5f; //최대 점프 높이
     public LayerMask whatIsGround; //무엇이 바닥인가?
     public Transform groundChecker;
+    public Transform wallChecker_L;
+    public Transform wallChecker_R;
     public int maxJumpCount = 2; //최대 2회 점프
     public float jumpSpeed = 5f;
     public float jumpTime = 0.5f; //.5초동안 누르고 있을 수 있다.
@@ -65,6 +69,11 @@ public class PlayerMove : MonoBehaviour
         if (playerInput.jump)
         { //점프키가 눌렸을 때
             JumpStart();
+        }
+
+        if(isWall_L || isWall_R)
+        {
+
         }
     }
     private void MoveStart()
@@ -115,12 +124,15 @@ public class PlayerMove : MonoBehaviour
     void FixedUpdate()
     {
         isGround = Physics2D.OverlapCircle(groundChecker.position, 0.1f, whatIsGround);
-        Debug.Log(dontMove);
+
+        // 오른쪽이나 왼쪽의 wallChecker가 하나라도 벽에 닿으면 true
+        isWall_L = Physics2D.OverlapCircle(wallChecker_L.position, 0.2f, whatIsGround);
+        isWall_R = Physics2D.OverlapCircle(wallChecker_R.position, 0.2f, whatIsGround);
+        
         if (dontMove)
             return;
-
         rigid.velocity = new Vector2(xMove * moveSpeed, rigid.velocity.y);
-
+        
         if (isGround && rigid.velocity.y < 0)
         { //땅바닥에 착지했다면 점프카운트 리셋
             jumpCount = maxJumpCount;
@@ -132,6 +144,10 @@ public class PlayerMove : MonoBehaviour
         Vector3 scale = transform.localScale;
         scale.x *= -1; // -1을 곱해줘서 반전해주기
         facingRight = !facingRight;
+        Debug.Log(wallChecker_L.localPosition.x * -1);
+        
+        wallChecker_L.position = new Vector2(wallChecker_L.localPosition.x * 1, wallChecker_L.position.y);
+        wallChecker_R.position = new Vector2(wallChecker_L.localPosition.x * 1, wallChecker_R.position.y);
         transform.localScale = scale;
     }
 }
