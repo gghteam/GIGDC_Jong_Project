@@ -10,6 +10,7 @@ public class EnemyFOV : MonoBehaviour
     public LayerMask layerMask;
     private int playerLayer;
     private EnemyMove enemyMove;
+    public Vector3 targetPos;
     private void Awake()
 	{
         enemyMove = GetComponent<EnemyMove>();
@@ -23,15 +24,16 @@ public class EnemyFOV : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (IsTracePlayer())
-        {
-            IsViewPlayer();
-            if (IsCanAttack())
-            {
-                enemyMove.canAttack = true;
-            }
-           
-        }
+        //if (IsTracePlayer())    //원 안에 플레이어가 있는가
+        //{
+        //    if (IsViewPlayer())//플레이어와 적 사이에 다른 물체는 없는가?
+        //    {
+        //        if (IsCanAttack())  //플레이어가 적 공격 사거리안에 들어왔는가
+        //        {
+        //        }
+        //    }
+
+        //}
     }
     public Vector2 CirclePoint(float angle)
     {
@@ -41,13 +43,25 @@ public class EnemyFOV : MonoBehaviour
     public bool IsViewPlayer()
     {
         bool isView = false;
-        Vector2 dir = GameManager.Player.position - transform.position;
-
-        RaycastHit2D hit2D = Physics2D.Raycast(transform.position, dir.normalized, viewRange, layerMask);
-        Debug.DrawRay(transform.position, dir.normalized * viewRange, Color.red, 0.1f);
+        Vector2 dirVec = GameManager.Player.position - transform.position;
+        float dir;
+        if (dirVec.x >= 0)
+        {
+            dir = 1f;
+        }
+        else
+        {
+            dir = -1f;
+        }            
+        
+        RaycastHit2D hit2D = Physics2D.Raycast(transform.position, dirVec.normalized, viewRange, layerMask);
+        Debug.DrawRay(transform.position, dirVec.normalized * viewRange, Color.red, 0.1f);
         if (hit2D.collider != null)
         {
             isView = (hit2D.collider.gameObject.CompareTag("Player"));
+            if (isView)
+                targetPos = (hit2D.collider.gameObject.transform.position /*+ new Vector3(dir*5,0,0)*/);
+            Debug.Log(targetPos);
         }
 
         return isView;
