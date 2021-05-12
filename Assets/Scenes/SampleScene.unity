@@ -2130,11 +2130,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8ff2fe63f9658747a5268e5b8ef4808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRange: 10.99
+  viewRange: 16
   viewAngle: 78
   layerMask:
     serializedVersion: 2
     m_Bits: 768
+  targetPos: {x: 0, y: 0, z: 0}
 --- !u!212 &375869796
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2198,16 +2199,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92d9587d88d4aa741aefe832155925a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  state: 0
   facingright: 1
   canAttack: 0
   isMoving: 1
+  isTargeting: 0
   patrolDistance: 30
-  movingSpeed: 10
+  movingSpeed: 5
   stayDelay: 2
   patrolPoint:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 0}
+  destination: {x: 0, y: 0, z: 0}
 --- !u!61 &375869798
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7656,7 +7660,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1598516590}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 59, y: -1.1, z: 0}
+  m_LocalPosition: {x: 38, y: 259, z: 0}
   m_LocalScale: {x: 1.9, y: 15.4, z: 1}
   m_Children: []
   m_Father: {fileID: 1667726166}

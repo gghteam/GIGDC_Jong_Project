@@ -11,12 +11,13 @@ public class EnemyMove : MonoBehaviour
         ATTACK,
         DIE
     }
-    private State state = State.PATROL;//에너미 상태
+    public State state = State.PATROL;//에너미 상태
     public bool facingright = true;
     private Rigidbody2D rigid;
 
     public bool canAttack = false;
     public bool isMoving = true;
+    public bool isTargeting = false;
     public float patrolDistance = 5f;
     public float movingSpeed = 2f;
     public float stayDelay = 3f;
@@ -25,7 +26,7 @@ public class EnemyMove : MonoBehaviour
     private Vector3 targetPoint;
     private List<Vector2> patrolList = new List<Vector2>();
     private int patrolIndex = 0;
-    private Vector3 destination;    // 현재 목표 지점
+    public Vector3 destination;    // 현재 목표 지점
     private EnemyFOV enemyFOV;
 
 
@@ -105,6 +106,7 @@ public class EnemyMove : MonoBehaviour
 		{
             case State.DIE:
                 break;
+
             case State.PATROL:
 				if ((destination - transform.position).sqrMagnitude <= 0.5f)
 				{
@@ -113,14 +115,16 @@ public class EnemyMove : MonoBehaviour
 				}
 				
 				break;
+
 			case State.TRACE:
-                Trace();
+                destination = targetPoint;
                 if ((destination - transform.position).sqrMagnitude <= 0.5f)
                 {
                     isStop = true;
                     StartCoroutine(TraceDelay()); //목표 지점에 도달하면 일정시간 멈춤
                 }
                 break;
+
 			case State.ATTACK:
 				break;
 			
@@ -130,23 +134,22 @@ public class EnemyMove : MonoBehaviour
 	}
     private void CheckState()
 	{
-        if (enemyFOV.IsTracePlayer())    //원 안에 플레이어가 있는가
+        if (enemyFOV.IsTracePlayer() && !isTargeting)       //어그로 안끌린상태
         {
-            if (enemyFOV.IsViewPlayer())//플레이어와 적 사이에 다른 물체는 없는가?
+            if (enemyFOV.IsViewPlayer())
             {
-                state = State.TRACE;
-                //if (enemyFOV.IsCanAttack())  //플레이어가 적 공격 사거리안에 들어왔는가
-                //{
-                //   // state = State.ATTACK;
-                //}
-            }
-            else
-            {
-                state = State.PATROL;
+                targetPoint = enemyFOV.targetPos;
+                isTargeting = true;
             }
         }
-        else
+        else if (enemyFOV.IsTracePlayer() && isTargeting)       //어그로 끌린상태
         {
+            state = State.TRACE;
+            //공격 거리 체크
+        }
+        else if (!enemyFOV.IsTracePlayer())     //원안에 안들어가있는 상태
+        {
+            isTargeting = false;
             state = State.PATROL;
         }
 
@@ -156,12 +159,11 @@ public class EnemyMove : MonoBehaviour
         //공격
         yield return new WaitForSeconds(0.1f); 
     }
-    private void Trace()
-    {
-        targetPoint = enemyFOV.targetPos;
-    }
     private IEnumerator TraceDelay()
     {
+        targetPoint = enemyFOV.targetPos;
+        destination = targetPoint;
         yield return new WaitForSeconds(stayDelay);
+        isStop = false;
     }
 }

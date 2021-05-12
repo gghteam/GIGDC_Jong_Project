@@ -144,7 +144,7 @@ public class PlayerMove : MonoBehaviour
         Vector3 scale = transform.localScale;
         scale.x *= -1; // -1을 곱해줘서 반전해주기
         facingRight = !facingRight;
-        Debug.Log(wallChecker_L.localPosition.x * -1);
+        //Debug.Log(wallChecker_L.localPosition.x * -1);
         
         wallChecker_L.position = new Vector2(wallChecker_L.localPosition.x * 1, wallChecker_L.position.y);
         wallChecker_R.position = new Vector2(wallChecker_L.localPosition.x * 1, wallChecker_R.position.y);
