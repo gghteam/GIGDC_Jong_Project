@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDead : MonoBehaviour
+public class SceneManager : MonoBehaviour
 {
-    
+    public GameObject player;
     public void DeadScene()
     {
-        gameObject.SetActive(false);
+        player.SetActive(false);
         //데드씬을 여기다 작업해야댐;
     }
 }

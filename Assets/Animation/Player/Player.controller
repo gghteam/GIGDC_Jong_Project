@@ -210,13 +210,13 @@ AnimatorStateMachine:
     m_Position: {x: 80, y: 160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 195517570699287098}
-    m_Position: {x: -410, y: 130, z: 0}
+    m_Position: {x: -390, y: 130, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8613881521838456389}
     m_Position: {x: -160, y: 130, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7119632988164644908}
-    m_Position: {x: -410, y: -60, z: 0}
+    m_Position: {x: -410, y: -50, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: -1879703315229265478}
@@ -466,12 +466,6 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: hp
-    m_Type: 1
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 0}
   - m_Name: isGround
     m_Type: 4
     m_DefaultFloat: 0
@@ -479,6 +473,12 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: isHit
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: isDead
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -800,9 +800,9 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 4
-    m_ConditionEvent: hp
-    m_EventTreshold: 0.1
+  - m_ConditionMode: 1
+    m_ConditionEvent: isDead
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7119632988164644908}
   m_Solo: 0
@@ -811,7 +811,7 @@ AnimatorStateTransition:
   serializedVersion: 3
   m_TransitionDuration: 0
   m_TransitionOffset: 0
-  m_ExitTime: 0.0000000069538677
+  m_ExitTime: 0.0000000108555955
   m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0

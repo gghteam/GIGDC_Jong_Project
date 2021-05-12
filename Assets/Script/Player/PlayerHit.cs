@@ -12,6 +12,7 @@ public class PlayerHit : MonoBehaviour, IDamageable
     private float dir;
     private int reqDamage;      // 방어력까지 계산한 데미지
     public bool isHit = false;
+    public bool isDead;
 
     [Header("무적관련변수들")]
     [SerializeField]
@@ -28,8 +29,9 @@ public class PlayerHit : MonoBehaviour, IDamageable
         playerStat.hp -= reqDamage;
         if(playerStat.hp <= 0)
         {
-            dead.isDead = true;
-            dead.DeadScene();
+            isDead = true;
+            //dead.DeadScene();
+            //playerMove.dontMove = true;
             //사망
         }
         else

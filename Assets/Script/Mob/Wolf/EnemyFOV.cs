@@ -56,7 +56,6 @@ public class EnemyFOV : MonoBehaviour
             Vector2 dir = GameManager.Player.position - transform.position; //z를 무시하고 받기 위해 Vector2로 형변환 한다.
             Vector3 right = enemyMove.facingright ? transform.right*-1 : transform.right;
             // Debug.DrawRay(transform.position, dir.normalized * viewRange, Color.white, 0.1f);
-            Debug.Log(dir);
             if (enemyMove.isTargeting)
             {
                 isTrace = true;

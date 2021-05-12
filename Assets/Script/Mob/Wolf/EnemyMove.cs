@@ -154,7 +154,11 @@ public class EnemyMove : MonoBehaviour
         }
 
     }
-    private IEnumerator Attack()
+    private void Attack()
+    {
+
+    }
+    private IEnumerator AttackDelay()
     {
         //공격
         yield return new WaitForSeconds(0.1f); 
